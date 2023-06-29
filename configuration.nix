@@ -2,6 +2,9 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running `nixos-help`).
 
+# TODO: add dotfiles
+# 	external monitor brightness
+# add busybox, cope, toybox
 { config, lib, pkgs, ... }:
 
 {
@@ -9,6 +12,7 @@
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
       "${builtins.fetchGit { url = "https://github.com/kekrby/nixos-hardware.git"; }}/apple/t2"
+<home-manager/nixos> # TODO: switch to flake + home manager
     ];
 
 # system.autoUpgrade.channel = "https://nixos.org/channels/nixos-21.05/";
@@ -32,8 +36,25 @@
     "hid_apple.swap_opt_cmd=1"
   ];
   };
-  #boot.tmp.cleanOnBoot = true;
+ boot.tmp.cleanOnBoot = true;
+         nixpkgs.config.segger-jlink.acceptLicense = true;
 
+services.udev.packages = [
+      (pkgs.writeTextFile {
+        name = "99-ftdi.rules";
+        text = ''
+		ATTRS{idVendor}=="0403", ATTRS{idProduct}=="6015", MODE="0666"
+        '';
+        destination = "/etc/udev/rules.d/99-ftdi.rules";
+      })
+    ];
+
+#services.udev = {
+#	extraRules = ''
+#		ATTRS{idVendor}=="0403", ATTRS{idProduct}=="6015", MODE="0666"
+#		ATTRS{idVendor}=="2341", ATTRS{idProduct}=="005a", MODE="0666"
+#'';
+#};
   # https://nixos.wiki/wiki/Laptop
   powerManagement.enable = true;
   powerManagement.cpuFreqGovernor = "schedutil";
@@ -50,6 +71,11 @@
   networking.hostName = "nixos";
 
 virtualisation.docker.enable = true;
+  #home.username = "samir";
+  #home.homeDirectory = "/home/samir";
+  #home.stateVersion = "23.05";
+  #programs.home-manager.enable = true;
+
   # Set your time zone.
   time.timeZone = "America/Los_Angeles";
 
@@ -82,11 +108,30 @@ virtualisation.docker.enable = true;
   # Enable CUPS to print documents.
   services.printing.enable = true;
 
-  # Enable sound.
+# Enable sound with pipewire.
   sound.enable = true;
-  hardware.pulseaudio.enable = true;
+  hardware.pulseaudio.enable = false;
+  security.rtkit.enable = true;
+  security.polkit.enable = true;
+  services.pipewire = {
+    enable = true;
+    alsa.enable = true;
+    alsa.support32Bit = true;
+    pulse.enable = true;
+    # If you want to use JACK applications, uncomment this
+    #jack.enable = true;
+
+    # use the example session manager (no others are packaged yet so this is enabled by default,
+    # no need to redefine it in your config for now)
+    #media-session.enable = true;
+  };
+
   hardware.bluetooth.enable = true;
+	services.usbmuxd.enable = true;
   
+services.openvpn.servers = {
+    homeVPN    = { config = '' config /home/samir/homeVPN.conf ''; }; # systemctl start openvpn-homeVPN.service
+  };
 
   # Enable touchpad support (enabled default in most desktopManager).
   services.xserver.libinput.enable = true;
@@ -113,16 +158,34 @@ virtualisation.docker.enable = true;
 	iwd
 	openvpn
 	gnu-efi
+	ntfs3g
+	exfat
   gnumake
+  ffmpeg
+  nmap
   pciutils
+  # usb
+  usbutils
+  usbrip
+  usbtop
+  usbview
+  libusb
+
+busybox
   acpi
   psensor
+  delta
     git
+    gh
     glxinfo
+#    nrf-command-line-tools
+#nrfconnect
     curl
     neovim
+#    segger-jlink
     htop
     discord
+    keepassxc
     signal-desktop
     cider # apple music
     vlc
