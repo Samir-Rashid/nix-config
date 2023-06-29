@@ -70,7 +70,7 @@ services.udev.packages = [
   networking.networkmanager.enable = true;  # Easiest to use and most distros use this by default.
   networking.hostName = "nixos";
 
-virtualisation.docker.enable = true;
+  virtualisation.docker.enable = true;
   #home.username = "samir";
   #home.homeDirectory = "/home/samir";
   #home.stateVersion = "23.05";
@@ -127,7 +127,7 @@ virtualisation.docker.enable = true;
   };
 
   hardware.bluetooth.enable = true;
-	services.usbmuxd.enable = true;
+services.usbmuxd.enable = true;
   
 services.openvpn.servers = {
     homeVPN    = { config = '' config /home/samir/homeVPN.conf ''; }; # systemctl start openvpn-homeVPN.service
@@ -152,7 +152,6 @@ services.openvpn.servers = {
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    # toybox, busybox
     vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     wget
 	iwd
@@ -171,7 +170,6 @@ services.openvpn.servers = {
   usbview
   libusb
 
-busybox
   acpi
   psensor
   delta
@@ -182,7 +180,7 @@ busybox
 #nrfconnect
     curl
     neovim
-#    segger-jlink
+    segger-jlink
     htop
     discord
     keepassxc
