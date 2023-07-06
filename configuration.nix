@@ -4,16 +4,49 @@
 
 # TODO: add dotfiles
 # 	external monitor brightness
-# add busybox, cope, toybox
+# add busybox, cope, toybox - breaks booting
+# failed to install asahi-linux's speaker dsp https://wiki.t2linux.org/guides/audio-config/
+# 						https://github.com/lemmyg/t2-apple-audio-dsp/tree/speakers_161
+
+# TODO: remove networkmanager notifications (breaks touchid)
+#sudo sh -c 'echo "# Disable for now T2 chip internal usb ethernet
+#blacklist cdc_ncm
+#blacklist cdc_mbim" >> /etc/modprobe.d/blacklist.conf'
+
+#  programs = {
+#    ssh.startAgent = true;
+#    command-not-found.enable = true;
+#    adb.enable = true;
+#    gnupg.agent.enable = true;
+#  };
+#
+#  documentation = {
+#    man.enable = true;
+#  };
 { config, lib, pkgs, ... }:
 
 {
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      ./pipewire.nix
       "${builtins.fetchGit { url = "https://github.com/kekrby/nixos-hardware.git"; }}/apple/t2"
 <home-manager/nixos> # TODO: switch to flake + home manager
     ];
+
+/* # wifi stuff
+hardware.firmware = [
+  (pkgs.stdenvNoCC.mkDerivation {
+    name = "brcm-firmware";
+
+    buildCommand = ''
+      dir="$out/lib/firmware"
+      mkdir -p "$dir"
+      cp -r ${./files/firmware}/* "$dir"
+    '';
+  })
+];
+*/
 
 # system.autoUpgrade.channel = "https://nixos.org/channels/nixos-21.05/";
   hardware.facetimehd.enable = lib.mkDefault
@@ -27,7 +60,9 @@
   boot.loader.efi.canTouchEfiVariables = true;
   #boot.initrd.kernelModules = [ "applespi" "spi_pxa2xx_platform" "intel_lpss_pci" "applesmc" ];
   boot = {
-    # kernelPackages = pkgs.linuxPackages_4_3;
+    # using the t2 custom kernel
+    # kernelPackages = pkgs.linuxPackages_latest; #pkgs.linuxPackages_4_3; # TODO: check this
+
     kernelParams = [
     # https://help.ubuntu.com/community/AppleKeyboard
     # https://wiki.archlinux.org/index.php/Apple_Keyboard
@@ -90,6 +125,7 @@ services.udev.packages = [
     # keyMap = "us";
     useXkbConfig = true; # use xkbOptions in tty.
   };
+  
 
   # Enable the X11 windowing system.
   services.xserver.enable = true;
@@ -119,7 +155,7 @@ services.udev.packages = [
     alsa.support32Bit = true;
     pulse.enable = true;
     # If you want to use JACK applications, uncomment this
-    #jack.enable = true;
+    jack.enable = true;
 
     # use the example session manager (no others are packaged yet so this is enabled by default,
     # no need to redefine it in your config for now)
@@ -163,6 +199,7 @@ services.openvpn.servers = {
   ffmpeg
   nmap
   pciutils
+  s-tui
   # usb
   usbutils
   usbrip
@@ -176,6 +213,8 @@ services.openvpn.servers = {
     git
     gh
     glxinfo
+  radeontop
+radeon-profile
 #    nrf-command-line-tools
 #nrfconnect
     curl
@@ -229,6 +268,24 @@ services.openvpn.servers = {
 	  gotop
 	  btop
 
+# trying to get audio dsp to work
+easyeffects
+
+pipewire 
+#pipewire-audio-client-libraries 
+#libpipewire-0.3-modules 
+#libspa-0.2-bluetooth 
+#libspa-0.2-jack 
+#libspa-0.2-modules 
+#pipewire-pulse 
+#pipewire-bin 
+#pipewire-tests
+wireplumber 
+#lsp-plugins 
+#calf-plugins 
+#swh-plugins
+
+
   texlive.combined.scheme-basic
     (vscode-with-extensions.override {
     vscodeExtensions = with vscode-extensions; [
@@ -268,6 +325,15 @@ options apple-gmux force_igd=y
       mode = "0440";
     };
   };
+
+    programs.command-not-found.enable = false;
+    # for home-manager, use programs.bash.initExtra instead
+    programs.bash.interactiveShellInit = ''
+      source ${pkgs.nix-index}/etc/profile.d/command-not-found.sh
+    '';
+
+
+
 
   #systemd.services.btattach-bcm2e7c = lib.mkIf config.hardware.bluetooth.enable {
   #  before = [ "bluetooth.target" ];
