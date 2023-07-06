@@ -30,9 +30,11 @@
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
       ./pipewire.nix
+      ./t2-mic.nix
       "${builtins.fetchGit { url = "https://github.com/kekrby/nixos-hardware.git"; }}/apple/t2"
 <home-manager/nixos> # TODO: switch to flake + home manager
     ];
+
 
 /* # wifi stuff
 hardware.firmware = [
@@ -215,10 +217,14 @@ services.openvpn.servers = {
     gh
     glxinfo
   radeontop
+gnome.gnome-sound-recorder
 radeon-profile
 #    nrf-command-line-tools
 #nrfconnect
     curl
+    #libbass
+    yt-dlp
+    ladspaPlugins
     neovim
     segger-jlink
     htop
@@ -303,8 +309,28 @@ wireplumber
       }
     ];
   })
+
+nix-index
+comma
+#(let
+#  comma = (import (pkgs.fetchFromGitHub {
+#    owner = "nix-community";
+#    repo = "comma";
+#    rev = "v1.2.0";
+#    sha256 = "0000000000000000000000000000000000000000000000000000";
+#  })).default;
+#in [ comma ];)
+#    comma = (import (pkgs.fetchFromGitHub {
+#    owner = "nix-community";
+#    repo = "comma";
+#    rev = "v1.2.0";
+#    sha256 = "0000000000000000000000000000000000000000000000000000";
+#  })).default;
+
+
   ];
 
+  #programs.nix-index.enable = true; # for comma
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
@@ -329,9 +355,9 @@ options apple-gmux force_igd=y
 
     programs.command-not-found.enable = false;
     # for home-manager, use programs.bash.initExtra instead
-    programs.bash.interactiveShellInit = ''
-      source ${pkgs.nix-index}/etc/profile.d/command-not-found.sh
-    '';
+    #programs.bash.interactiveShellInit = ''
+    #  source ${pkgs.nix-index}/etc/profile.d/command-not-found.sh
+    #'';
 
 
 

@@ -3,6 +3,10 @@
 # https://github.com/lemmyg/t2-apple-audio-dsp/blob/speakers_161/config/10-t2_161_speakers.conf
 # https://wiki.t2linux.org/guides/audio-config/
 
+# systemctl --user status wireplumber pipewire pipewire-pulse
+# systemctl --user restart wireplumber pipewire pipewire-pulse
+# sudo  journalctl --since="-10m" | grep "pipe"
+
 { config, pkgs, ... }:
 let
   json = pkgs.formats.json {};
@@ -31,6 +35,7 @@ let
             "media.name"       = "MacBook Pro T2 DSP Speakers";
             "filter.graph" = {
                 "nodes" = [
+                    # TODO: bass enhancer link is dead
                     { "type" = "lv2";
                       "name" = "bass";
                       "plugin" = "http://calf.sourceforge.net/plugins/BassEnhancer";
@@ -266,6 +271,28 @@ let
             };
         };
     }
+
+    # microphone sound normalize config
+# https://github.com/lemmyg/t2-apple-audio-dsp/tree/mic
+##{
+##	"type"   = "ladspa"
+##	"name"   = "rnnoise"
+##	plugin = /usr/local/lib/ladspa/librnnoise_ladspa.so
+##	label  = noise_suppressor_stereo
+##	control = {
+##	    "VAD Threshold (%)" 85.0
+##	    #"VAD Grace Period (ms)" 100.0
+##	    #"Retroactive VAD Grace (ms)" 0.0
+##	}
+##    }
+
+# links
+#                links = [
+#                    { output = "mix:Out" input = "preamp:Input" }
+#                    { output = "preamp:Output" input = "rnnoise:Input (L)" }
+#                    { output = "rnnoise:Output (L)" input = "compressor:Left input" }
+#                    { output = "compressor:Left output" input = "limiter:Input 1" }
+#                ]
 ];
 
   };
