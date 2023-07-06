@@ -146,7 +146,8 @@ services.udev.packages = [
 
 # Enable sound with pipewire.
   sound.enable = true;
-  hardware.pulseaudio.enable = false;
+  # hardware.pulseaudio.enable = false;
+hardware.pulseaudio.enable = pkgs.lib.mkForce false;
   security.rtkit.enable = true;
   security.polkit.enable = true;
   services.pipewire = {

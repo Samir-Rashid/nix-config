@@ -1,3 +1,8 @@
+# Using this config made by the Asahi Linux team and ported by the t2 Linux team.
+# NOTE: ONLY USE THIS CONFIG ON THE EXACT SAME HARDWARE CONFIG, OTHERWISE RISK SPEAKER DAMAGE
+# https://github.com/lemmyg/t2-apple-audio-dsp/blob/speakers_161/config/10-t2_161_speakers.conf
+# https://wiki.t2linux.org/guides/audio-config/
+
 { config, pkgs, ... }:
 let
   json = pkgs.formats.json {};
