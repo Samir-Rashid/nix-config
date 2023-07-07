@@ -1,5 +1,7 @@
 # https://github.com/lemmyg/t2-apple-audio-dsp/blob/mic/install.sh
 
+# nixos doesn't want to see module correctly, try pasting all this in pipewire nix file
+
 { config, pkgs, ... }:
 let
   json = pkgs.formats.json {};

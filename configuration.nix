@@ -30,7 +30,7 @@
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
       ./pipewire.nix
-      ./t2-mic.nix
+      #./t2-mic.nix
       "${builtins.fetchGit { url = "https://github.com/kekrby/nixos-hardware.git"; }}/apple/t2"
 <home-manager/nixos> # TODO: switch to flake + home manager
     ];
@@ -276,7 +276,18 @@ radeon-profile
 	  btop
 
 # trying to get audio dsp to work
+carla # gui thing
+lsp-plugins
+rnnoise-plugin
+distrho
+ir.lv2
+ardour
 easyeffects
+calf
+jack2
+swh_lv2
+lv2
+lilv
 
 pipewire 
 #pipewire-audio-client-libraries 
@@ -288,10 +299,8 @@ pipewire
 #pipewire-bin 
 #pipewire-tests
 wireplumber 
-#lsp-plugins 
-#calf-plugins 
-#swh-plugins
-
+lsp-plugins 
+ladspaPlugins
 
   texlive.combined.scheme-basic
     (vscode-with-extensions.override {
@@ -329,6 +338,25 @@ comma
 
 
   ];
+environment.localBinInPath = true;
+environment.variables = {
+      DSSI_PATH   = "$HOME/.dssi:$HOME/.nix-profile/lib/dssi:/run/current-system/sw/lib/dssi";
+      LADSPA_PATH = "$HOME/.ladspa:$HOME/.nix-profile/lib/ladspa:/run/current-system/sw/lib/ladspa";
+      LV2_PATH    = "$HOME/.lv2:$HOME/.nix-profile/lib/lv2:/run/current-system/sw/lib/lv2";
+      LXVST_PATH  = "$HOME/.lxvst:$HOME/.nix-profile/lib/lxvst:/run/current-system/sw/lib/lxvst";
+      VST_PATH    = "$HOME/.vst:$HOME/.nix-profile/lib/vst:/run/current-system/sw/lib/vst";
+};
+
+#  environment.variables =
+#    (with lib;
+#    listToAttrs (
+#      map
+#        (
+#          type: nameValuePair "${toUpper type}_PATH"
+#            ([ "$HOME/.${type}" "$HOME/.nix-profile/lib/${type}" "/run/current-system/sw/lib/${type}" ])
+#        )
+#        [ "dssi" "ladspa" "lv2" "lxvst" "vst" "vst3" ]
+#    ));
 
   #programs.nix-index.enable = true; # for comma
 

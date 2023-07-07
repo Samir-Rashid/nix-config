@@ -307,6 +307,14 @@ in
     wantedBy = ["pipewire.service"];
     script = "${pkgs.pipewire}/bin/pipewire -c source-rnnoise.conf";
     enable = true;
-    path = with pkgs; [pipewire rnnoise-plugin];
+    path = with pkgs; [pipewire lv2 ladspaPlugins swh_lv2 calf rnnoise-plugin] ++
+    [ pavucontrol pulsemixer pulseaudio ] # for pactl usage and finer output control
+    ++ [ carla ] # JACK utilities
+    ++ [ lsp-plugins dragonfly-reverb  ] # Audio plugins
+    ++ [ distrho swh_lv2 calf ir.lv2 ]
+    ;
   };
+
+
 }
+
