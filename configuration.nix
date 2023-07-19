@@ -9,6 +9,9 @@
 # 						https://github.com/lemmyg/t2-apple-audio-dsp/tree/speakers_161
 # debug sleep, hibernate
 
+# Add auto install for mic and speaker dsp
+#    I installed currently just by doing the 2 install scripts, but that is not portable
+
 # TODO: remove networkmanager notifications (breaks touchid)
 #sudo sh -c 'echo "# Disable for now T2 chip internal usb ethernet
 #blacklist cdc_ncm
@@ -30,11 +33,12 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
-      ./pipewire.nix
+      #./pipewire.nix
       #./t2-mic.nix
       "${builtins.fetchGit { url = "https://github.com/kekrby/nixos-hardware.git"; }}/apple/t2"
 <home-manager/nixos> # TODO: switch to flake + home manager
     ];
+
 
 
 /* # wifi stuff
@@ -160,6 +164,7 @@ hardware.pulseaudio.enable = pkgs.lib.mkForce false;
     pulse.enable = true;
     # If you want to use JACK applications, uncomment this
     jack.enable = true;
+    wireplumber.enable = true;
 
     # use the example session manager (no others are packaged yet so this is enabled by default,
     # no need to redefine it in your config for now)
