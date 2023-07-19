@@ -7,6 +7,7 @@
 # add busybox, cope, toybox - breaks booting
 # failed to install asahi-linux's speaker dsp https://wiki.t2linux.org/guides/audio-config/
 # 						https://github.com/lemmyg/t2-apple-audio-dsp/tree/speakers_161
+# debug sleep, hibernate
 
 # TODO: remove networkmanager notifications (breaks touchid)
 #sudo sh -c 'echo "# Disable for now T2 chip internal usb ethernet
@@ -237,6 +238,7 @@ radeon-profile
     bitwarden
     obsidian
     mpv
+    xournal
     obs-studio
     blender
     kdenlive

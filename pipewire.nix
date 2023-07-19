@@ -40,20 +40,20 @@ let
                       "name" = "bass";
                       "plugin" = "http://calf.sourceforge.net/plugins/BassEnhancer";
                       "control" = {
-                        "bypass" = "0";
-                        "level_in" = "1.0";
-                        "level_out" = "1.0";
-                        "amount" = "0.9";
-                        "meter_in" = "0";
-                        "meter_out" = "0";
-                        "clip_in" = "0";
-                        "clip_out" = "0";
-                        "drive" = "8.5";
-                        "blend" = "-10.0";
-                        "freq" = "120";
-                        "listen" = "0";
-                        "floor_active" = "1";
-                        "floor" = "40";
+                        "bypass" = 0; # can not be set: No such file or directory
+                        "level_in" = 1.0;
+                        "level_out" = 1.0;
+                        "amount" = 0.9;
+                        "meter_in" = 0; # can not be set: No such file or directory
+                        "meter_out" = 0; # can not be set: No such file or directory
+                        "clip_in" = 0; # nixos pipewire[22982]: mod.filter-chain: control 'clip_in' can not be set: No such file or directory
+                        "clip_out" = 0; # can not be set: No such file or directory
+                        "drive" = 8.5;
+                        "blend" = -10.0;
+                        "freq" = 120;
+                        "listen" = 0;
+                        "floor_active" = 1;
+                        "floor" = 40;
                       };
                     }
                     {
@@ -62,85 +62,85 @@ let
                         "name" = "compressor";
                         "control" = {
                             # "Enable"
-                            "mode" = "1";
-                            "bypass" = "0";
+                            "mode" = 1;
+                            # "bypass" = 0; # can not be set: No such file or directory
 
                             # "Preamp volumes"
-                            "g_in" = "1.0";
-                            "g_out" = "1.0";
-                            "g_dry" = "0.0";
-                            "g_wet" = "1.0";
+                            "g_in" = 1.0;
+                            "g_out" = 1.0;
+                            "g_dry" = 0.0;
+                            "g_wet" = 1.0;
 
-                            "bsel" = "0";
-                            "flt" = "1";
-                            "ife_l" = "0";
-                            "ofe_l" = "0";
-                            "ife_r" = "0";
-                            "ofe_r" = "0";
+                            "bsel" = 0;
+                            "flt" = 1;
+                            "ife_l" = 0;
+                            "ofe_l" = 0;
+                            "ife_r" = 0;
+                            "ofe_r" = 0;
 
                             # "Band 0"
-                            "cbe_0" = "1";
-                            "ce_0" = "1";
-                            "al_0" = "0.501187"; #-"5 db"
-                            "at_0" = "0.0";
-                            "rrl_0" = "0.00001";
-                            "rt_0" = "750.0";
-                            "cr_0" = "2.0";
-                            "kn_0" = "0.501187"; #-"5 db"
-                            "mk_0" = "1.0";
-                            "sla_0" = "10.0";
-                            "bs_0" = "0"; # "Solo band" 0 ["boolean"]: "true/false"
-                            "bm_0" = "0"; # "Mute band" 0 ["boolean"]: "true/false"
+                            # "cbe_0" = 1; # can not be set: No such file or directory
+                            "ce_0" = 1;
+                            "al_0" = 0.501187; #-"5 db"
+                            "at_0" = 0.0;
+                            "rrl_0" = 0.00001;
+                            "rt_0" = 750.0;
+                            "cr_0" = 2.0;
+                            "kn_0" = 0.501187; #-"5 db"
+                            "mk_0" = 1.0;
+                            "sla_0" = 10.0;
+                            "bs_0" = 0; # "Solo band" 0 ["boolean"]: "true/false"
+                            "bm_0" = 0; # "Mute band" 0 ["boolean"]: "true/false"
                             
                             # "Band 1"
-                            "cbe_1" = "1";
-                            "ce_1" = "1";
-                            "sf_1" = "100"; # "Split frequency" 2 [Hz]: "10.00000000".."20000.00000000"
-                            "al_1" = "0.251189"; #-"12 db" "Attack threshold" 0 [G]: "0.00100000".."1.00000000"
-                            "at_1" = "0.0"; # "Attack time" 0 [ms]: "0.00000000".."2000.00000000"
-                            "rrl_1" = "0.00001"; # "Release threshold" 0 [G]: "0.00000000".."63.09574890"
-                            "rt_1" = "750"; # "Release time" 0 [ms]: "0.00000000".."5000.00000000"
-                            "cr_1" = "2.0"; # "Ratio 0": "1.00000000".."100.00000000"
-                            "kn_1" = "0.251197"; # "Knee 0" [G]: "0.06310000".."1.00000000"
-                            "sla_1" = "10.0";
-                            "mk_1" = "5.0";
-                            "bs_1" = "0"; # "Solo band" 1 ["boolean"]: "true/false"
-                            "bm_1" = "0"; # "Mute band" 1 ["boolean"]: "true/false"
+                            "cbe_1" = 1;
+                            "ce_1" = 1;
+                            "sf_1" = 100; # "Split frequency" 2 [Hz]: "10.00000000".."20000.00000000"
+                            "al_1" = 0.251189; #-"12 db" "Attack threshold" 0 [G]: "0.00100000".."1.00000000"
+                            "at_1" = 0.0; # "Attack time" 0 [ms]: "0.00000000".."2000.00000000"
+                            "rrl_1"= 0.00001; # "Release threshold" 0 [G]: "0.00000000".."63.09574890"
+                            "rt_1" = 750; # "Release time" 0 [ms]: "0.00000000".."5000.00000000"
+                            "cr_1" = 2.0; # "Ratio 0": "1.00000000".."100.00000000"
+                            "kn_1" = 0.251197; # "Knee 0" [G]: "0.06310000".."1.00000000"
+                            "sla_1" = 10.0;
+                            "mk_1" = 5.0;
+                            "bs_1" = 0; # "Solo band" 1 ["boolean"]: "true/false"
+                            "bm_1" = 0; # "Mute band" 1 ["boolean"]: "true/false"
 
                             # "Band 2"
-                            "cbe_2" = "1";
-                            "ce_2" = "1";
-                            "sf_2" = "500";
-                            "al_2" = "0.251189"; #-"12 db"
-                            "at_2" = "0.0";
-                            "rrl_2" = "0.00001";
-                            "rt_2" = "750.0";
-                            "cr_2" = "2.0";
-                            "kn_2" = "0.251197"; #-"12 db"
-                            "mk_2" = "4.5";
-                            "sla_2" = "10.0";
-                            "bs_2" = "0"; # "Solo band" 2 ["boolean"]: "true/false"
-                            "bm_2" = "0"; # "Mute band" 2 ["boolean"]: "true/false"
+                            "cbe_2" = 1;
+                            "ce_2" = 1;
+                            "sf_2" = 500;
+                            "al_2" = 0.251189; #-"12 db"
+                            "at_2" = 0.0;
+                            "rrl_2" = 0.00001;
+                            "rt_2" = 750.0;
+                            "cr_2" = 2.0;
+                            "kn_2" = 0.251197; #-"12 db"
+                            "mk_2" = 4.5;
+                            "sla_2" = 10.0;
+                            "bs_2" = 0; # "Solo band" 2 ["boolean"]: "true/false"
+                            "bm_2" = 0; # "Mute band" 2 ["boolean"]: "true/false"
 
                             # "Band 7"
                             "cbe_7" = 1;
                             "ce_7" = 1;
-                            "sf_7" = "3000";
-                            "al_7" = "0.251189"; #-"12 db"
-                            "at_7" = "0.00001";
-                            "rrl_7" = "750.0";
-                            "cr_7" = "2.5";
-                            "kn_7" = "0.251197"; #-"12 db"
-                            "sla_7" = "10.0";
-                            "mk_7" = "3.0";
-                            "bs_7" = "0"; # "Solo band" 7 ["boolean"]: "true/false"
-                            "bm_7" = "0"; # "Mute band" 7 ["boolean"]: "true/false"
+                            "sf_7" = 3000;
+                            "al_7" = 0.251189; #-"12 db"
+                            "at_7" = 0.00001;
+                            "rrl_7" = 750.0;
+                            "cr_7" = 2.5;
+                            "kn_7" = 0.251197; #-"12 db"
+                            "sla_7" = 10.0;
+                            "mk_7" = 3.0;
+                            "bs_7" = 0; # "Solo band" 7 ["boolean"]: "true/false"
+                            "bm_7" = 0; # "Mute band" 7 ["boolean"]: "true/false"
 
                             # "Disable other" "bands"
-                            "cbe_3" = "0";
-                            "cbe_4" = "0";
-                            "cbe_5" = "0";
-                            "cbe_6" = "0";
+                            "cbe_3" = 0;
+                            "cbe_4" = 0;
+                            "cbe_5" = 0;
+                            "cbe_6" = 0;
                             # "bs_0" = "0";
                             # "bm_0" = "0"; # TODO: these two are duplicate, missing = sign
                         };
@@ -150,7 +150,7 @@ let
                          "name"   = "limiter";
                          "plugin" = "fast_lookahead_limiter_1913";
                          "label"  = "fastLookaheadLimiter";
-                         "control" = { "Input gain (dB)" = "0"; "Limit (dB)" = "-1"; "Release time (s)" = "0.8"; };
+                         "control" = { "Input gain (dB)" = 0; "Limit (dB)" = -1; "Release time (s)" = 0.8; };
                     }
                     # "Left Tweeter"
                     {
@@ -302,7 +302,7 @@ in
       source = json.generate "source-rnnoise.conf" pw_rnnoise_config;
   };
   systemd.user.services."pipewire-source-rnnoise" = {
-    environment = { LADSPA_PATH = "${pkgs.rnnoise-plugin}/lib/ladspa"; };
+    environment = { LADSPA_PATH = "${pkgs.ladspaPlugins}/lib/ladspa"; };
     description = "Noise canceling source for pipewire";
     wantedBy = ["pipewire.service"];
     script = "${pkgs.pipewire}/bin/pipewire -c source-rnnoise.conf";
@@ -318,3 +318,4 @@ in
 
 }
 
+# ~/.config/pipewire may need the files in /etc/pipewire
