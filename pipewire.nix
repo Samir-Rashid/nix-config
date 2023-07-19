@@ -40,14 +40,14 @@ let
                       "name" = "bass";
                       "plugin" = "http://calf.sourceforge.net/plugins/BassEnhancer";
                       "control" = {
-                        "bypass" = 0; # can not be set: No such file or directory
+                        # "bypass" = 0; # can not be set: No such file or directory
                         "level_in" = 1.0;
                         "level_out" = 1.0;
                         "amount" = 0.9;
-                        "meter_in" = 0; # can not be set: No such file or directory
-                        "meter_out" = 0; # can not be set: No such file or directory
-                        "clip_in" = 0; # nixos pipewire[22982]: mod.filter-chain: control 'clip_in' can not be set: No such file or directory
-                        "clip_out" = 0; # can not be set: No such file or directory
+                        # "meter_in" = 0; # can not be set: No such file or directory
+                        # "meter_out" = 0; # can not be set: No such file or directory
+                        # "clip_in" = 0; # nixos pipewire[22982]: mod.filter-chain: control 'clip_in' can not be set: No such file or directory
+                        # "clip_out" = 0; # can not be set: No such file or directory
                         "drive" = 8.5;
                         "blend" = -10.0;
                         "freq" = 120;
@@ -159,7 +159,7 @@ let
                         "name" = "convLT";
                         "config" = {
                             #"filename" = "/"usr/share"/"pipewire/devices"/"apple/flat"-"48k.wav"
-                            "filename" = "/usr/share/pipewire/devices/apple/macbook_pro_t2_16_1_tweeters-48k_4.wav";
+                            "filename" = "/home/samir/Documents/github/t2-apple-audio-dsp/firs/macbook_pro_t2_16_1_tweeters-48k_4.wav";
                             #"filename" = "/"usr/share"/"pipewire/devices"/"apple/firs_j314_tweeters"-"48.wav"
                             "channel" = "0";
                             "gain" = "1.0";
@@ -173,7 +173,7 @@ let
                         "name" = "convRT";
                         "config" = {
                             #"filename" = "/"usr/share"/"pipewire/devices"/"apple/flat"-"48k.wav"
-                            "filename" = "/usr/share/pipewire/devices/apple/macbook_pro_t2_16_1_tweeters-48k_4.wav";
+                            "filename" = "/home/samir/Documents/github/t2-apple-audio-dsp/firs/macbook_pro_t2_16_1_tweeters-48k_4.wav";
                             #"filename" = "/"usr/share"/"pipewire/devices"/"apple/firs_j314_tweeters"-"48.wav"
                             "channel" = "0";
                             "gain" = "1.0";
@@ -307,11 +307,12 @@ in
     wantedBy = ["pipewire.service"];
     script = "${pkgs.pipewire}/bin/pipewire -c source-rnnoise.conf";
     enable = true;
-    path = with pkgs; [pipewire lv2 ladspaPlugins swh_lv2 calf rnnoise-plugin] ++
-    [ pavucontrol pulsemixer pulseaudio ] # for pactl usage and finer output control
-    ++ [ carla ] # JACK utilities
-    ++ [ lsp-plugins dragonfly-reverb  ] # Audio plugins
-    ++ [ distrho swh_lv2 calf ir.lv2 ]
+    path = with pkgs; [ ladspaPlugins ]
+    ++ [ pipewire lv2 swh_lv2 calf rnnoise-plugin ]
+    # ++ [ pavucontrol pulsemixer pulseaudio ] # for pactl usage and finer output control
+    # ++ [ carla ] # JACK utilities
+    # ++ [ lsp-plugins dragonfly-reverb  ] # Audio plugins
+    # ++ [ distrho ir.lv2 ]
     ;
   };
 
@@ -319,3 +320,4 @@ in
 }
 
 # ~/.config/pipewire may need the files in /etc/pipewire
+# PIPEWIRE_LOG_SYSTEMD=false PIPEWIRE_DEBUG=5 pipewire -v -c /etc/pipewire/source-rnnoise.conf
