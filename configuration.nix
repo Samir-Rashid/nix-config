@@ -9,8 +9,13 @@
 # 						https://github.com/lemmyg/t2-apple-audio-dsp/tree/speakers_161
 # debug sleep, hibernate
 
+# TODO: audio config things in .nix
+
+# Fix touchbar issues https://wiki.t2linux.org/guides/postinstall/#setting-up-the-touch-bar
 # Add auto install for mic and speaker dsp
 #    I installed currently just by doing the 2 install scripts, but that is not portable
+
+# TODO: reinstall and make reproducible wifi firmware in config, change fs
 
 # TODO: remove networkmanager notifications (breaks touchid)
 #sudo sh -c 'echo "# Disable for now T2 chip internal usb ethernet
@@ -79,6 +84,7 @@ hardware.firmware = [
   ];
   };
  boot.tmp.cleanOnBoot = true;
+
          nixpkgs.config.segger-jlink.acceptLicense = true;
 
 # enable udev rules from packages
@@ -133,7 +139,10 @@ services.udev.packages = [
     font = "Lat2-Terminus16";
     # keyMap = "us";
     useXkbConfig = true; # use xkbOptions in tty.
+    # packages = [ terminus_font ];
   };
+  # console font (readable at boot)
+  # i18n.consoleFont = "ter-i32b";
   
 
   # Enable the X11 windowing system.
@@ -211,6 +220,8 @@ services.openvpn.servers = {
   nmap
   pciutils
   s-tui
+  gnomeExtensions.pop-shell
+
   # usb
   usbutils
   usbrip
@@ -232,6 +243,13 @@ radeon-profile
     curl
     #libbass
     yt-dlp
+    trashy
+    scrot
+    okular
+    hollywood
+    apostrophe
+    i3 # twm
+
     ladspaPlugins
     neovim
     segger-jlink
@@ -329,7 +347,7 @@ ladspaPlugins
   })
 
 nix-index
-comma
+comma # run `nix-index` to generate package index
 #(let
 #  comma = (import (pkgs.fetchFromGitHub {
 #    owner = "nix-community";
@@ -347,6 +365,27 @@ comma
 
 
   ];
+
+
+
+# https://nixos.wiki/wiki/Discord
+nixpkgs.overlays =
+  let
+    myOverlay = self: super: {
+      discord = super.discord.override {  #withVencord = true; }; #withOpenASAR = true;
+            nss = super.nss_latest;
+	    withOpenASAR = true;
+	    #withVencord = true; # TODO: broken
+    };
+
+    };
+  in
+  [ myOverlay ];
+  # TODO: add krisp workaround to config
+  # https://github.com/NixOS/nixpkgs/issues/195512
+
+
+
 environment.localBinInPath = true;
 environment.variables = {
       DSSI_PATH   = "$HOME/.dssi:$HOME/.nix-profile/lib/dssi:/run/current-system/sw/lib/dssi";
