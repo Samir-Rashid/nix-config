@@ -13,7 +13,8 @@ NixOS wiki
 https://wiki.t2linux.org/
 
 https://www.arthurkoziel.com/installing-nixos-on-a-macbookpro/
-I would recommend following this along with the Arch wiki. The Arch wiki should stay up to date with any changes since this post. 
+I would recommend following this along with the [Arch wiki](https://wiki.archlinux.org/title/Mac#Installation). The Arch wiki should stay up to date with any changes since this post. 
+Other links you may find useful to cross reference [1](https://superuser.com/questions/795879/how-to-configure-dual-boot-nixos-with-mac-os-x-on-an-uefi-macbook) [2](https://thoughtbot.com/blog/install-linux-on-a-macbook-air) [3](https://borretti.me/article/nixos-for-the-impatient)
 
 Remaining tasks after you boot nixos will be to install the wifi drivers (instructions in t2 linux wiki)and to enable graphics switching (also in t2 wiki, note I had to reset nvram for it to work)
 
