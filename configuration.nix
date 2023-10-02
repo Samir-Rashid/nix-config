@@ -110,8 +110,21 @@ services.udev.packages = [
   powerManagement.cpuFreqGovernor = "schedutil";
   services.thermald.enable = true;
   services.power-profiles-daemon.enable = false; # gnome enables this, which makes tlp incompatible
+  services.auto-cpufreq.enable = true;
+services.auto-cpufreq.settings = {
+  battery = {
+     governor = "powersave";
+     turbo = "never";
+  };
+  charger = {
+     governor = "performance";
+     turbo = "auto";
+  };
+};
+
   services.tlp.enable = true;
   powerManagement.powertop.enable = true;
+  # try system76 power?
 
   # networking.hostName = "nixos"; # Define your hostname.
   # Pick only one of the below networking options.
@@ -223,17 +236,19 @@ services.openvpn.servers = {
   gnomeExtensions.pop-shell
 
   # usb
-  usbutils
-  usbrip
-  usbtop
-  usbview
-  libusb
+ # usbutils
+ # usbrip
+ # usbtop
+ # usbview
+ # libusb
 
   acpi
   psensor
   delta
+  losslesscut-bin
     git
     gh
+    
     glxinfo
   radeontop
 gnome.gnome-sound-recorder
@@ -295,23 +310,26 @@ radeon-profile
 	  lfs
 	  ffmpeg 
 	  yt-dlp
+	  spotify
 	  croc
 	  gocryptfs
+	  libreoffice-still
+	  cool-retro-term
 
 	  htop
 	  gotop
 	  btop
 
 # trying to get audio dsp to work
-carla # gui thing
-lsp-plugins
+#carla # gui thing
+#lsp-plugins
 rnnoise-plugin
-distrho
-ir.lv2
-ardour
-easyeffects
+#distrho
+#ir.lv2
+#ardour
+#easyeffects
 calf
-jack2
+#jack2
 swh_lv2
 lv2
 lilv
