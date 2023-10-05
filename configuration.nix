@@ -2,6 +2,8 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running `nixos-help`).
 
+# to garbage collect $ nix-store --gc
+
 # TODO: add dotfiles
 # 	external monitor brightness
 # add busybox, cope, toybox - breaks booting
@@ -41,7 +43,9 @@
       #./pipewire.nix
       #./t2-mic.nix
       ./unstable.nix
-      "${builtins.fetchGit { url = "https://github.com/kekrby/nixos-hardware.git"; }}/apple/t2"
+      "${builtins.fetchGit { url = "https://github.com/NixOS/nixos-hardware.git"; }}/apple/t2"
+      # "${builtins.fetchGit { url = "https://github.com/kekrby/nixos-hardware.git"; }}/apple/t2"
+
 <home-manager/nixos> # TODO: switch to flake + home manager
     ];
 
