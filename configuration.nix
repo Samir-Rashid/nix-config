@@ -40,6 +40,7 @@
       ./hardware-configuration.nix
       #./pipewire.nix
       #./t2-mic.nix
+      ./unstable.nix
       "${builtins.fetchGit { url = "https://github.com/kekrby/nixos-hardware.git"; }}/apple/t2"
 <home-manager/nixos> # TODO: switch to flake + home manager
     ];
@@ -117,8 +118,10 @@ services.auto-cpufreq.settings = {
      turbo = "never";
   };
   charger = {
-     governor = "performance";
-     turbo = "auto";
+     governor = "powersave";
+     # governor = "performance";
+     # turbo = "auto";
+     turbo = "never";
   };
 };
 
@@ -214,12 +217,16 @@ services.openvpn.servers = {
       firefox
       thunderbird
       ungoogled-chromium
+      google-chrome
       tree
     ];
   };
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
+
+
+
   environment.systemPackages = with pkgs; [
     vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     wget
@@ -381,10 +388,7 @@ comma # run `nix-index` to generate package index
 #    sha256 = "0000000000000000000000000000000000000000000000000000";
 #  })).default;
 
-
   ];
-
-
 
 # https://nixos.wiki/wiki/Discord
 nixpkgs.overlays =
