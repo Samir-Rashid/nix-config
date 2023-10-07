@@ -18,7 +18,7 @@ What's not:
 > [!WARNING]  
 > I seriously cannot recommend using NixOS. Any OS will work fine and there are better, useful things to spend your time on.
 > A funny but apt warning I found in a [readme](https://github.com/javacafe01/dotfiles)
-> ![Learning curve of NixOS leads to death](https://camo.githubusercontent.com/bfd366beea8df2cf0ca1da5b7038c92cb6d1ed9c14bc10a99b98c153c4b86e69/68747470733a2f2f692e726564642e69742f697869367a6b756467737536312e706e67|width=10)
+> <img src="https://i.redd.it/ixi6zkudgsu61.png" width="50%" alt="Learning curve of NixOS leads to death" />
 > 
 > Some more serious posts of the pitfalls of using NixOS:
 > Personally, I have experienced the bad UX debugging nix issues, the terrible NixOS documentation, and the fragmentation of nix standards making things very hard to understand. NixOS concepts are hard to grasp and you don't want to have to wonder about all these philosophical reasons why simple things are hard to do as you are searching through forum posts to solve your issue.
