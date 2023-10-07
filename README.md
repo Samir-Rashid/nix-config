@@ -1,7 +1,5 @@
 # nix-config
 
-[![built with nix](https://img.shields.io/static/v1?logo=nixos&logoColor=white&label=&message=Built%20with%20Nix&color=41439a)](https://builtwithnix.org)
-
 Nix configuration for MacBook 16,1. 2019 MacBook Pro 16 inch.
 
 What's working:
@@ -18,20 +16,23 @@ What's not:
 > [!WARNING]  
 > I seriously cannot recommend using NixOS. Any OS will work fine and there are better, useful things to spend your time on.
 > A funny but apt warning I found in a [readme](https://github.com/javacafe01/dotfiles)
-> <img src="https://i.redd.it/ixi6zkudgsu61.png" width="50%" alt="Learning curve of NixOS leads to death" />
+> [Learning curve of NixOS leads to death](https://camo.githubusercontent.com/bfd366beea8df2cf0ca1da5b7038c92cb6d1ed9c14bc10a99b98c153c4b86e69/68747470733a2f2f692e726564642e69742f697869367a6b756467737536312e706e67)
 > 
 > Some more serious posts of the pitfalls of using NixOS:
+>
 > Personally, I have experienced the bad UX debugging nix issues, the terrible NixOS documentation, and the fragmentation of nix standards making things very hard to understand. NixOS concepts are hard to grasp and you don't want to have to wonder about all these philosophical reasons why simple things are hard to do as you are searching through forum posts to solve your issue.
+>
 > https://github.com/lambdanil/nix-problems
+>
 > https://www.willghatch.net/blog/2020/06/27/nixos-the-good-the-bad-and-the-ugly/
 > 
 > While NixOS is a bit much, nix the package manager is a game changer. I can confidently recommend using Nix package manager + Unix derived OS. [This post](https://jvns.ca/blog/2023/02/28/some-notes-on-using-nix/) is a light read going over some basic info on what that would look like in practice.
 
-### Install Instructions
+### [Install instructions](https://wiki.t2linux.org/distributions/nixos/installation/)
 
-[Use the t2 wiki.](https://wiki.t2linux.org/distributions/nixos/installation/) I would recommend skimming below for potential pitfalls. The installation has become a lot simpler after I did my setup since all the t2 macbook hardware quirks got upstreamed into the nixos-hardware repo. The t2 nixos maintainers have graciously put basically all of the special patches listed in the wiki into the hardware config so you should not have to do anything special for things to work.
+I would recommend skimming below for potential pitfalls. The installation has become a lot simpler after I did my setup since all the t2 macbook hardware quirks got upstreamed into the nixos-hardware repo. The t2 nixos maintainers have graciously put basically all of the special patches listed in the wiki into the hardware config so you should not have to do anything special for things to work.
 
-### Useful resources
+Useful resources
 - Arch wiki
 - NixOS wiki
 - https://wiki.t2linux.org/
