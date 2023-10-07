@@ -2,7 +2,13 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running `nixos-help`).
 
+# Commands
 # to garbage collect $ nix-store --gc
+# To update nix channels sudo nixos-rebuild switch --upgrade
+# List generations: nix profile history --profile /nix/var/nix/profiles/system
+# Delete generations: sudo nix profile wipe-history --profile /nix/var/nix/profiles/system --older-than 14d.`
+# deduplicate nix-store pkgs nix-store --optimise
+# nix shell github:DavHau/mach-nix
 
 # TODO: add dotfiles
 # 	external monitor brightness
@@ -89,6 +95,13 @@ hardware.firmware = [
   ];
   };
  boot.tmp.cleanOnBoot = true;
+nix.gc = {
+  automatic = true;
+  dates = "weekly";
+  options = "--delete-older-than 30d";
+};
+nix.settings.auto-optimise-store = true;
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
          nixpkgs.config.segger-jlink.acceptLicense = true;
 
