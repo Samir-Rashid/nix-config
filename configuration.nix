@@ -9,9 +9,11 @@
 # Delete generations: sudo nix profile wipe-history --profile /nix/var/nix/profiles/system --older-than 14d.`
 # deduplicate nix-store pkgs nix-store --optimise
 # nix shell github:DavHau/mach-nix
+# to debug shutdown: journalctl -p 3 -b -1
 
 # TODO: add dotfiles
 # 	external monitor brightness
+# add secrets https://xeiaso.net/blog/nixos-encrypted-secrets-2021-01-20/
 # add busybox, cope, toybox - breaks booting
 # failed to install asahi-linux's speaker dsp https://wiki.t2linux.org/guides/audio-config/
 # 						https://github.com/lemmyg/t2-apple-audio-dsp/tree/speakers_161
@@ -217,7 +219,9 @@ hardware.pulseaudio.enable = pkgs.lib.mkForce false;
 
   hardware.bluetooth.enable = true;
 services.usbmuxd.enable = true;
+hardware.apple-t2.enableAppleSetOsLoader = true; # not sure if this is needed. it was working fine
   
+# https://nixos.wiki/wiki/OpenVPN
 services.openvpn.servers = {
     homeVPN    = { config = '' config /home/samir/homeVPN.conf ''; }; # systemctl start openvpn-homeVPN.service
   };
