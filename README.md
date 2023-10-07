@@ -23,6 +23,7 @@ What's not:
 > https://github.com/lambdanil/nix-problems
 > https://www.willghatch.net/blog/2020/06/27/nixos-the-good-the-bad-and-the-ugly/
 > 
+> While NixOS is a bit much, nix the package manager is a game changer. I can confidently recommend using Nix package manager + Unix derived OS. [This post](https://jvns.ca/blog/2023/02/28/some-notes-on-using-nix/) is a light read going over some basic info on what that would look like in practice.
 
 ### [Install instructions](https://wiki.t2linux.org/distributions/nixos/installation/)
 
