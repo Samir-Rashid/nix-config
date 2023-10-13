@@ -228,6 +228,9 @@ services.openvpn.servers = {
 
   # Enable touchpad support (enabled default in most desktopManager).
   services.xserver.libinput.enable = true;
+  # these are overwritten by gnome
+  # services.xserver.libinput.touchpad.accelSpeed = "2.0";
+  # services.xserver.libinput.touchpad.accelProfile = "adaptive"; # or "flat" for no acceleration
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
 #  users.mutableUsers = false; # Make sure the only way to add users/groups is to change this file
@@ -376,12 +379,36 @@ lsp-plugins
 ladspaPlugins
 
   texlive.combined.scheme-basic
+
+    # TODO: switch to using these vscode extensions https://github.com/nix-community/nix-vscode-extensions
     (vscode-with-extensions.override {
     vscodeExtensions = with vscode-extensions; [
       bbenoist.nix
       ms-python.python
       ms-azuretools.vscode-docker
       ms-vscode-remote.remote-ssh
+      ms-vscode.cmake-tools
+      ms-vscode.cpptools
+      twxs.cmake
+      eamodio.gitlens
+      ms-vscode.makefile-tools
+      rust-lang.rust-analyzer
+      davidanson.vscode-markdownlint
+
+      # ms-vscode-remote.remote-containers
+      vscode-icons-team.vscode-icons
+
+      formulahendry.auto-rename-tag
+      # GitHub.vscode-pull-request-github
+      redhat.vscode-yaml
+      wholroyd.jinja
+      # TabNine.tabnine-vscode
+      vscodevim.vim
+
+      # aaron-bond.better-comments
+      # wayou.vscode-todo-highlight
+      # Gruntfuggly.todo-tree
+      # ms-vscode.live-server
     ] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
       {
         name = "remote-ssh-edit";
