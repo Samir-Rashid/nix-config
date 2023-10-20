@@ -7,6 +7,7 @@
 # To update nix channels sudo nixos-rebuild switch --upgrade
 # List generations: nix profile history --profile /nix/var/nix/profiles/system
 # Delete generations: sudo nix profile wipe-history --profile /nix/var/nix/profiles/system --older-than 14d.`
+# https://specific.solutions.limited/blog/recovering-diskspace-in-nixos
 # deduplicate nix-store pkgs nix-store --optimise
 # nix shell github:DavHau/mach-nix
 # to debug shutdown: journalctl -p 3 -b -1
@@ -20,6 +21,8 @@
 # debug sleep, hibernate
 
 # TODO: audio config things in .nix
+
+# TODO: https://gitlab.com/magnolia1234/bypass-paywalls-firefox-clean#installation
 
 # Fix touchbar issues https://wiki.t2linux.org/guides/postinstall/#setting-up-the-touch-bar
 # Add auto install for mic and speaker dsp
@@ -254,6 +257,7 @@ services.openvpn.servers = {
   environment.systemPackages = with pkgs; [
     vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     wget
+    scc #cloc
 	iwd
 	openvpn
 	gnu-efi
@@ -266,6 +270,7 @@ services.openvpn.servers = {
   s-tui
   gnomeExtensions.pop-shell
 
+mypaint
   # usb
  # usbutils
  # usbrip
