@@ -158,6 +158,18 @@ services.auto-cpufreq.settings = {
   networking.networkmanager.enable = true;  # Easiest to use and most distros use this by default.
   networking.hostName = "nixos";
 
+  # /etc/hosts
+  networking.extraHosts =
+  ''
+    0.0.0.0 reddit.com
+    0.0.0.0 youtube.com
+  '';
+  # can also add stevenblack list from github
+  # extrahostsfromsteve = pkgs.fetchurl { url = "https://raw.githubusercontent.com/StevenBlack/hosts/v2.3.7/hosts"; sha256 = "sha256-C39FsyMQ3PJEwcfPsYSF7SZQZGA79m6o70vmwyFMPLM="; }
+  # networking.extraHosts = '' ${builtins.readFile extrahostsfromsteve} '';
+
+
+
   virtualisation.docker.enable = true;
   #home.username = "samir";
   #home.homeDirectory = "/home/samir";
@@ -285,6 +297,9 @@ mypaint
     git
     gh
     
+    (wine.override { wineBuild = "wine64"; })
+    bottles
+
     glxinfo
   radeontop
 gnome.gnome-sound-recorder
@@ -310,6 +325,7 @@ radeon-profile
     signal-desktop
     cider # apple music
     vlc
+    mc # tui file browser
     epiphany
     bitwarden
     obsidian
@@ -384,7 +400,7 @@ lsp-plugins
 ladspaPlugins
 
   texlive.combined.scheme-basic
-
+	vscode-fhs
     # TODO: switch to using these vscode extensions https://github.com/nix-community/nix-vscode-extensions
     (vscode-with-extensions.override {
     vscodeExtensions = with vscode-extensions; [
@@ -396,6 +412,8 @@ ladspaPlugins
       ms-vscode.cpptools
       twxs.cmake
       eamodio.gitlens
+              ms-toolsai.jupyter
+	              ms-python.python
       ms-vscode.makefile-tools
       rust-lang.rust-analyzer
       davidanson.vscode-markdownlint
@@ -414,6 +432,38 @@ ladspaPlugins
       # wayou.vscode-todo-highlight
       # Gruntfuggly.todo-tree
       # ms-vscode.live-server
+
+
+      /*
+              dracula-theme.theme-dracula
+        # vscodevim.vim
+        yzhang.markdown-all-in-one
+        # WakaTime.vscode-wakatime
+        denoland.vscode-deno
+        esbenp.prettier-vscode
+        eamodio.gitlens
+        file-icons.file-icons
+        dracula-theme.theme-dracula
+        jnoortheen.nix-ide
+        svelte.svelte-vscode
+        golang.go
+        github.copilot
+        ms-python.python
+        ms-toolsai.jupyter
+        antfu.icons-carbon
+        matklad.rust-analyzer
+        file-icons.file-icons
+        dbaeumer.vscode-eslint
+        bradlc.vscode-tailwindcss
+        kamikillerto.vscode-colorize
+        ms-vscode-remote.remote-ssh
+        mechatroner.rainbow-csv
+        donjayamanne.githistory
+        davidanson.vscode-markdownlint
+        bbenoist.nix
+        github.copilot
+	*/
+
     ] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
       {
         name = "remote-ssh-edit";
