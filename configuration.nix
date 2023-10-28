@@ -35,6 +35,8 @@
 #blacklist cdc_ncm
 #blacklist cdc_mbim" >> /etc/modprobe.d/blacklist.conf'
 
+# TODO: alias xclip to `xclip -selection clipboard`
+
 #  programs = {
 #    ssh.startAgent = true;
 #    command-not-found.enable = true;
@@ -281,6 +283,7 @@ services.openvpn.servers = {
   pciutils
   s-tui
   gnomeExtensions.pop-shell
+  gnomeExtensions.desktop-cube
 
 mypaint
   # usb
@@ -340,6 +343,7 @@ radeon-profile
 	synology-drive-client
 
 	  # shell utilities
+	  xclip
 	  lsd
 	  zoxide
 	  starship
