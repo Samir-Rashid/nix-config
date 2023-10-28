@@ -1,0 +1,46 @@
+ActivityWatch Web Watcher
+Add-ons Search Detection
+Amazon.com
+Bing
+Bitwarden - Free Password Manager
+Buster: Captcha Solver for Humans
+Bypass Paywalls Clean
+ClearURLs
+Consent-O-Matic
+Dark Reader
+DuckDuckGo
+eBay
+Enhancer for YouTube™
+Facebook Container
+Firefox Multi-Account Containers
+Firefox Relay
+Google
+I still don't care about cookies
+LeechBlock NG
+Less Distracting Reddit
+Modern for Wikipedia
+Old Reddit Redirect
+Privacy Possum
+SingleFile
+Skip Redirect
+SponsorBlock for YouTube - Skip Sponsorships
+Tab Session Manager
+Tree Style Tab
+uBlock Origin
+Unhook - Remove YouTube Recommended Videos
+User-Agent Switcher and Manager
+Video DownloadHelper
+Wikipedia (en)
+Dark
+Bypass Paywalls
+CORS Everywhere
+Decentraleyes
+I don't care about cookies
+KeePassXC-Browser
+Privacy Badger
+Smart Referer
+Temporary Containers
+Violentmonkey
+Firefox Alpenglow
+Light
+System theme — auto
