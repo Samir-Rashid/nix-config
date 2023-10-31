@@ -282,8 +282,17 @@ services.openvpn.servers = {
   nmap
   pciutils
   s-tui
+
+  # gnome extensions
   gnomeExtensions.pop-shell
   gnomeExtensions.desktop-cube
+  gnomeExtensions.system-monitor
+  gnomeExtensions.burn-my-windows
+gnomeExtensions.grand-theft-focus
+gnomeExtensions.fullscreen-avoider
+gnomeExtensions.blur-my-shell
+gnomeExtensions.dash-to-panel
+gnomeExtensions.appindicator
 
 mypaint
   # usb
@@ -299,6 +308,7 @@ mypaint
   losslesscut-bin
     git
     gh
+    nixfmt
     
     (wine.override { wineBuild = "wine64"; })
     bottles
