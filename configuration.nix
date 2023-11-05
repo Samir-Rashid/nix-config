@@ -100,6 +100,14 @@
       "hid_apple.swap_opt_cmd=1"
     ];
   };
+
+# disable sleep on lid close
+services.logind = {
+  lidSwitch = "lock";
+  lidSwitchDocked = "lock";
+  lidSwitchExternalPower = "lock";
+};
+
   boot.tmp.cleanOnBoot = true;
   nix.gc = {
     automatic = true;
@@ -566,6 +574,15 @@
   };
 
   programs.command-not-found.enable = false;
+
+  home-manager.users.samir = { pkgs, ... }: {
+    home.stateVersion = "23.05";
+    home.packages = with pkgs; [
+      htop
+    ];
+
+  };
+
   # for home-manager, use programs.bash.initExtra instead
   #programs.bash.interactiveShellInit = ''
   #  source ${pkgs.nix-index}/etc/profile.d/command-not-found.sh
