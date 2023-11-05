@@ -63,6 +63,10 @@
     <home-manager/nixos> # TODO: switch to flake + home manager
   ];
 
+  nix = {
+    package = pkgs.nixFlakes;
+    extraOptions = "experimental-features = nix-command flakes";
+  };
   /* # wifi stuff
      hardware.firmware = [
        (pkgs.stdenvNoCC.mkDerivation {
