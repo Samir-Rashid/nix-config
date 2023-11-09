@@ -1,3 +1,4 @@
+# flake template from https://www.youtube.com/watch?v=AGVXJ-TIv3Y
 {
   description = "A very basic flake";
 
