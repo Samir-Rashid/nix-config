@@ -36,6 +36,8 @@
 #blacklist cdc_mbim" >> /etc/modprobe.d/blacklist.conf'
 
 # TODO: alias xclip to `xclip -selection clipboard`
+# TODO: make home manager firefox and vscode extensions reproducible. 
+#           nix.enableLanguageServer = "true" in vscode to make nix lsp work
 
 #  programs = {
 #    ssh.startAgent = true;
@@ -120,6 +122,9 @@ services.logind = {
   };
   nix.settings.auto-optimise-store = true;
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
+
+  # automatically activate nix-shells
+    programs.direnv.enable = true;
 
   nixpkgs.config.segger-jlink.acceptLicense = true;
 
@@ -318,7 +323,12 @@ services.logind = {
     losslesscut-bin
     git
     gh
+
+    # nix language
     nixfmt
+    nixpkgs-fmt
+    nil # nix lsp
+    rnix-lsp
 
     (wine.override { wineBuild = "wine64"; })
     bottles
@@ -344,11 +354,13 @@ services.logind = {
     segger-jlink
     htop
     discord
+    element-desktop
     keepassxc
     signal-desktop
     cider # apple music
     vlc
     mc # tui file browser
+    nrf-command-line-tools
     epiphany
     bitwarden
     obsidian
