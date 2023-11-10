@@ -1,17 +1,16 @@
-# nix-config
+# Samir Rashid's nix-config
 
 Nix configuration for MacBook 16,1. 2019 MacBook Pro 16 inch.
 
 What's working:
 - everything
-- display, audio, speakers, trackpad, keyboard, camera, mic, battery life, gpu, igpu, bluetooth, wifi, dual boot, 
+  - display, audio, speakers, trackpad, keyboard, camera, mic, battery life, gpu, igpu, bluetooth, wifi, dual boot, 
 
 What's not:
-- some proprietary things are messed up and will never work
-  - custom touchbar graphics
-  - touch ID
 - some questionable sleep problems
-- ...
+  - Upgrading MacOS to Sonoma breaks Linux sleep across all distros. Apple has changed some firmware and fixes for this have not been merged upstream yet. Sleep used to work for me and I expect it to work again.
+- some proprietary things are messed up and will never work
+  - touch ID
 
 > [!WARNING]  
 > I seriously cannot recommend using NixOS. Any OS will work fine and there are better, useful things to spend your time on.
