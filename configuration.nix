@@ -52,7 +52,8 @@
 { config, lib, pkgs, ... }:
 
 {
-  imports = [ # Include the results of the hardware scan.
+  imports = [
+    # Include the results of the hardware scan.
     ./hardware-configuration.nix
     #./pipewire.nix
     #./t2-mic.nix
@@ -107,12 +108,12 @@
     ];
   };
 
-# disable sleep on lid close
-services.logind = {
-  lidSwitch = "lock";
-  lidSwitchDocked = "lock";
-  lidSwitchExternalPower = "lock";
-};
+  # disable sleep on lid close
+  services.logind = {
+    lidSwitch = "lock";
+    lidSwitchDocked = "lock";
+    lidSwitchExternalPower = "lock";
+  };
 
   boot.tmp.cleanOnBoot = true;
   nix.gc = {
@@ -124,7 +125,7 @@ services.logind = {
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   # automatically activate nix-shells
-    programs.direnv.enable = true;
+  programs.direnv.enable = true;
 
   nixpkgs.config.segger-jlink.acceptLicense = true;
 
@@ -180,8 +181,10 @@ services.logind = {
 
   # /etc/hosts
   networking.extraHosts = ''
+    0.0.0.0 www.reddit.com
     0.0.0.0 reddit.com
     0.0.0.0 youtube.com
+    0.0.0.0 www.youtube.com
   '';
   # can also add stevenblack list from github
   # extrahostsfromsteve = pkgs.fetchurl { url = "https://raw.githubusercontent.com/StevenBlack/hosts/v2.3.7/hosts"; sha256 = "sha256-C39FsyMQ3PJEwcfPsYSF7SZQZGA79m6o70vmwyFMPLM="; }
@@ -254,11 +257,11 @@ services.logind = {
     true; # not sure if this is needed. it was working fine
 
   # https://nixos.wiki/wiki/OpenVPN
-  services.openvpn.servers = {
-    homeVPN = {
-      config = "config /home/samir/homeVPN.conf ";
-    }; # systemctl start openvpn-homeVPN.service
-  };
+  # services.openvpn.servers = {
+  #   homeVPN = {
+  #     config = "config /home/samir/homeVPN.conf ";
+  #   }; # systemctl start openvpn-homeVPN.service
+  # };
 
   # Enable touchpad support (enabled default in most desktopManager).
   services.xserver.libinput.enable = true;
@@ -359,6 +362,7 @@ services.logind = {
     signal-desktop
     cider # apple music
     vlc
+    handbrake
     mc # tui file browser
     nrf-command-line-tools
     epiphany
@@ -435,7 +439,26 @@ services.logind = {
     lsp-plugins
     ladspaPlugins
 
+    # Gstreamer
+    # Video/Audio data composition framework tools like "gst-inspect", "gst-launch" ...
+    gst_all_1.gstreamer
+    # Common plugins like "filesrc" to combine within e.g. gst-launch
+    gst_all_1.gst-plugins-base
+    # Specialized plugins separated by quality
+    gst_all_1.gst-plugins-good
+    gst_all_1.gst-plugins-bad
+    gst_all_1.gst-plugins-ugly
+    # Plugins to reuse ffmpeg to play almost every video format
+    gst_all_1.gst-libav
+    # Support the Video Audio (Hardware) Acceleration API
+    gst_all_1.gst-vaapi
+
+    # Text editing stuff
     texlive.combined.scheme-basic
+    #typst
+    # vscode-extensions.nvarner.typst-lsp
+    # typst-fmt
+    # typst-lsp
     vscode-fhs
     # TODO: switch to using these vscode extensions https://github.com/nix-community/nix-vscode-extensions
     (vscode-with-extensions.override {
@@ -527,17 +550,20 @@ services.logind = {
   ];
 
   # https://nixos.wiki/wiki/Discord
-  nixpkgs.overlays = let
-    myOverlay = self: super: {
-      discord =
-        super.discord.override { # withVencord = true; }; #withOpenASAR = true;
-          nss = super.nss_latest;
-          withOpenASAR = true;
-          #withVencord = true; # TODO: broken
-        };
+  nixpkgs.overlays =
+    let
+      myOverlay = self: super: {
+        discord =
+          super.discord.override {
+            # withVencord = true; }; #withOpenASAR = true;
+            nss = super.nss_latest;
+            withOpenASAR = true;
+            #withVencord = true; # TODO: broken
+          };
 
-    };
-  in [ myOverlay ];
+      };
+    in
+    [ myOverlay ];
   # TODO: add krisp workaround to config
   # https://github.com/NixOS/nixpkgs/issues/195512
 
