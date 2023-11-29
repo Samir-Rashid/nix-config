@@ -12,6 +12,12 @@
 # nix shell github:DavHau/mach-nix
 # to debug shutdown: journalctl -p 3 -b -1
 
+# TODO: nondeterminisms
+# - background image
+# - power button gnome setting
+# - dark mode
+# - automatic suspend, battery %
+
 # TODO: add dotfiles
 # 	external monitor brightness
 # add secrets https://xeiaso.net/blog/nixos-encrypted-secrets-2021-01-20/
@@ -36,8 +42,10 @@
 #blacklist cdc_mbim" >> /etc/modprobe.d/blacklist.conf'
 
 # TODO: alias xclip to `xclip -selection clipboard`
+# vim config: set clipboard=unnamedplus
 # TODO: make home manager firefox and vscode extensions reproducible. 
 #           nix.enableLanguageServer = "true" in vscode to make nix lsp work
+# TODO: https://github.com/nix-community/nix-direnv
 
 #  programs = {
 #    ssh.startAgent = true;
@@ -139,6 +147,8 @@
       destination = "/etc/udev/rules.d/99-ftdi.rules";
     })
     pkgs.segger-jlink
+
+#gnome.gnome-settings-daemon
   ];
 
   #services.udev = {
@@ -262,6 +272,7 @@
   #     config = "config /home/samir/homeVPN.conf ";
   #   }; # systemctl start openvpn-homeVPN.service
   # };
+  services.tailscale.enable = false;
 
   # Enable touchpad support (enabled default in most desktopManager).
   services.xserver.libinput.enable = true;
@@ -273,6 +284,7 @@
   #  users.mutableUsers = false; # Make sure the only way to add users/groups is to change this file
   users.users.samir = {
     isNormalUser = true;
+    shell = pkgs.zsh;
     extraGroups = [ "wheel" "docker" ]; # Enable ‘sudo’ for the user.
     packages = with pkgs; [
       firefox
@@ -282,6 +294,8 @@
       tree
     ];
   };
+
+  programs.zsh.enable = true;
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -300,6 +314,7 @@
     nmap
     pciutils
     s-tui
+    exa
 
     # gnome extensions
     gnomeExtensions.pop-shell
@@ -310,7 +325,8 @@
     gnomeExtensions.fullscreen-avoider
     gnomeExtensions.blur-my-shell
     gnomeExtensions.dash-to-panel
-    gnomeExtensions.appindicator
+    gnomeExtensions.appindicator # systray icons
+    gnomeExtensions.gsconnect
 
     mypaint
     # usb
@@ -592,7 +608,10 @@
   #        [ "dssi" "ladspa" "lv2" "lxvst" "vst" "vst3" ]
   #    ));
 
+  # https://github.com/nix-community/nix-index-database
   #programs.nix-index.enable = true; # for comma
+programs.neovim.vimAlias = true;
+programs.neovim.viAlias = true;
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
