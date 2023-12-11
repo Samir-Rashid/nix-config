@@ -1,10 +1,9 @@
-# Samir Rashid's nix-config
-
+# Samir's nix-config [![built with nix](https://img.shields.io/static/v1?logo=nixos&logoColor=white&label=&message=Built%20with%20Nix&color=41439a)](https://builtwithnix.org)
 Nix configuration for MacBook 16,1. 2019 MacBook Pro 16 inch.
 
 What's working:
 - everything
-  - display, audio, speakers, trackpad, keyboard, camera, mic, battery life, gpu, igpu, bluetooth, wifi, dual boot, 
+  - display, audio, speakers, trackpad, keyboard, camera, mic, battery life, gpu, igpu, bluetooth, wifi, dual boot, touchbar, ...
 
 What's not:
 - some questionable sleep problems
@@ -15,8 +14,8 @@ What's not:
 > [!WARNING]  
 > I seriously cannot recommend using NixOS. Any OS will work fine and there are better, useful things to spend your time on.
 > A funny but apt warning I found in a [readme](https://github.com/javacafe01/dotfiles)
->
-> [Learning curve of NixOS leads to death](https://camo.githubusercontent.com/bfd366beea8df2cf0ca1da5b7038c92cb6d1ed9c14bc10a99b98c153c4b86e69/68747470733a2f2f692e726564642e69742f697869367a6b756467737536312e706e67)
+> 
+>  <img src="https://camo.githubusercontent.com/bfd366beea8df2cf0ca1da5b7038c92cb6d1ed9c14bc10a99b98c153c4b86e69/68747470733a2f2f692e726564642e69742f697869367a6b756467737536312e706e67" alt="Learning curve of NixOS leads to death" width="50%" />
 > 
 > Some more serious posts of the pitfalls of using NixOS:
 >
