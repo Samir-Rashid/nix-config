@@ -15,6 +15,7 @@ What's not:
 > [!WARNING]  
 > I seriously cannot recommend using NixOS. Any OS will work fine and there are better, useful things to spend your time on.
 > A funny but apt warning I found in a [readme](https://github.com/javacafe01/dotfiles)
+>
 > [Learning curve of NixOS leads to death](https://camo.githubusercontent.com/bfd366beea8df2cf0ca1da5b7038c92cb6d1ed9c14bc10a99b98c153c4b86e69/68747470733a2f2f692e726564642e69742f697869367a6b756467737536312e706e67)
 > 
 > Some more serious posts of the pitfalls of using NixOS:

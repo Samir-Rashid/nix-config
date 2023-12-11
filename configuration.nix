@@ -14,9 +14,7 @@
 
 # TODO: nondeterminisms
 # - background image
-# - power button gnome setting
-# - dark mode
-# - automatic suspend, battery %
+# - power button gnome setting, dark mode, automatic suspend, battery %, gnome extensions
 
 # TODO: add dotfiles
 # 	external monitor brightness
@@ -26,13 +24,9 @@
 # 						https://github.com/lemmyg/t2-apple-audio-dsp/tree/speakers_161
 # debug sleep, hibernate
 
-# TODO: audio config things in .nix
-
 # TODO: https://gitlab.com/magnolia1234/bypass-paywalls-firefox-clean#installation
 
-# Fix touchbar issues https://wiki.t2linux.org/guides/postinstall/#setting-up-the-touch-bar
-# Add auto install for mic and speaker dsp
-#    I installed currently just by doing the 2 install scripts, but that is not portable
+# TODO: Fix touchbar issues https://wiki.t2linux.org/guides/postinstall/#setting-up-the-touch-bar
 
 # TODO: reinstall and make reproducible wifi firmware in config, change fs
 
@@ -46,6 +40,8 @@
 # TODO: make home manager firefox and vscode extensions reproducible. 
 #           nix.enableLanguageServer = "true" in vscode to make nix lsp work
 # TODO: https://github.com/nix-community/nix-direnv
+
+# TODO: use kernel `latest`
 
 #  programs = {
 #    ssh.startAgent = true;
@@ -71,7 +67,7 @@
     }/apple/t2"
     # "${builtins.fetchGit { url = "https://github.com/kekrby/nixos-hardware.git"; }}/apple/t2"
 
-    <home-manager/nixos> # TODO: switch to flake + home manager
+    <home-manager/nixos>
   ];
 
   nix = {
@@ -105,7 +101,7 @@
   #boot.initrd.kernelModules = [ "applespi" "spi_pxa2xx_platform" "intel_lpss_pci" "applesmc" ];
   boot = {
     # using the t2 custom kernel
-    # kernelPackages = pkgs.linuxPackages_latest; #pkgs.linuxPackages_4_3; # TODO: check this
+    # kernelPackages = pkgs.linuxPackages_latest; # TODO: check this
 
     kernelParams = [
       # https://help.ubuntu.com/community/AppleKeyboard
@@ -148,7 +144,7 @@
     })
     pkgs.segger-jlink
 
-#gnome.gnome-settings-daemon
+    #gnome.gnome-settings-daemon
   ];
 
   #services.udev = {
@@ -243,7 +239,6 @@
 
   # Enable sound with pipewire.
   sound.enable = true;
-  # hardware.pulseaudio.enable = false;
   hardware.pulseaudio.enable = pkgs.lib.mkForce false;
   security.rtkit.enable = true;
   security.polkit.enable = true;
@@ -272,7 +267,7 @@
   #     config = "config /home/samir/homeVPN.conf ";
   #   }; # systemctl start openvpn-homeVPN.service
   # };
-  services.tailscale.enable = false;
+  services.tailscale.enable = true;
 
   # Enable touchpad support (enabled default in most desktopManager).
   services.xserver.libinput.enable = true;
@@ -295,10 +290,29 @@
     ];
   };
 
-  programs.zsh.enable = true;
+  programs = {
+      zsh = {
+        enable = true;
+        ohMyZsh = {
+          enable = true;
+          theme = "robbyrussell";
+          plugins = [
+            #"sudo"
+            #"terraform"
+            #"systemadmin"
+            #"vi-mode"
+            "git"
+          ];
+        };
+      };
+};
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
+
+              nixpkgs.config.permittedInsecurePackages = [
+                "electron-24.8.6"
+              ];
 
   environment.systemPackages = with pkgs; [
     vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
@@ -315,7 +329,9 @@
     pciutils
     s-tui
     exa
+    tailscale
 
+    xcolor # color picker
     # gnome extensions
     gnomeExtensions.pop-shell
     gnomeExtensions.desktop-cube
@@ -329,12 +345,6 @@
     gnomeExtensions.gsconnect
 
     mypaint
-    # usb
-    # usbutils
-    # usbrip
-    # usbtop
-    # usbview
-    # libusb
 
     acpi
     psensor
@@ -610,8 +620,8 @@
 
   # https://github.com/nix-community/nix-index-database
   #programs.nix-index.enable = true; # for comma
-programs.neovim.vimAlias = true;
-programs.neovim.viAlias = true;
+  programs.neovim.vimAlias = true;
+  programs.neovim.viAlias = true;
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
@@ -686,5 +696,8 @@ programs.neovim.viAlias = true;
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "23.05"; # Did you read the comment?
 
+# for an unattended server
+# system.autoUpgrade.enable = true;
+# system.autoUpgrade.allowReboot = true;
 }
 
