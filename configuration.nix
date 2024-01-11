@@ -74,7 +74,7 @@
     package = pkgs.nixFlakes;
     extraOptions = "experimental-features = nix-command flakes";
   };
-    # t2linux specific
+  # t2linux specific
   nix.settings = {
     trusted-substituters = [
       "https://t2linux.cachix.org"
@@ -300,28 +300,28 @@
   };
 
   programs = {
-      zsh = {
+    zsh = {
+      enable = true;
+      ohMyZsh = {
         enable = true;
-        ohMyZsh = {
-          enable = true;
-          theme = "robbyrussell";
-          plugins = [
-            #"sudo"
-            #"terraform"
-            #"systemadmin"
-            #"vi-mode"
-            "git"
-          ];
-        };
+        theme = "robbyrussell";
+        plugins = [
+          #"sudo"
+          #"terraform"
+          #"systemadmin"
+          #"vi-mode"
+          "git"
+        ];
       };
-};
+    };
+  };
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
 
-              nixpkgs.config.permittedInsecurePackages = [
-                "electron-24.8.6"
-              ];
+  nixpkgs.config.permittedInsecurePackages = [
+    "electron-24.8.6"
+  ];
 
   environment.systemPackages = with pkgs; [
     vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
@@ -706,8 +706,8 @@
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "23.05"; # Did you read the comment?
 
-# for an unattended server
-# system.autoUpgrade.enable = true;
-# system.autoUpgrade.allowReboot = true;
+  # for an unattended server
+  # system.autoUpgrade.enable = true;
+  # system.autoUpgrade.allowReboot = true;
 }
 
