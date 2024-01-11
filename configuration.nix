@@ -74,6 +74,15 @@
     package = pkgs.nixFlakes;
     extraOptions = "experimental-features = nix-command flakes";
   };
+    # t2linux specific
+  nix.settings = {
+    trusted-substituters = [
+      "https://t2linux.cachix.org"
+    ];
+    trusted-public-keys = [
+      "t2linux.cachix.org-1:P733c5Gt1qTcxsm+Bae0renWnT8OLs0u9+yfaK2Bejw="
+    ];
+  };
   /* # wifi stuff
      hardware.firmware = [
        (pkgs.stdenvNoCC.mkDerivation {
@@ -317,7 +326,7 @@
   environment.systemPackages = with pkgs; [
     vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     wget
-    scc # cloc
+    scc # cloc # source code line counter
     iwd
     openvpn
     gnu-efi
@@ -345,13 +354,14 @@
     gnomeExtensions.gsconnect
 
     mypaint
+    sioyek # pdf viewer
 
     acpi
     psensor
     delta
     losslesscut-bin
     git
-    gh
+    gh # github cli
 
     # nix language
     nixfmt
