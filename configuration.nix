@@ -268,7 +268,7 @@
   hardware.bluetooth.enable = true;
   services.usbmuxd.enable = true;
   hardware.apple-t2.enableAppleSetOsLoader =
-    true; # not sure if this is needed. it was working fine
+    true; # for iGPU
 
   # https://nixos.wiki/wiki/OpenVPN
   # services.openvpn.servers = {
@@ -324,7 +324,7 @@
   ];
 
   environment.systemPackages = with pkgs; [
-    vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+    vim
     wget
     scc # cloc # source code line counter
     iwd
@@ -333,12 +333,11 @@
     ntfs3g
     exfat
     gnumake
-    ffmpeg
     nmap
     pciutils
     s-tui
     exa
-    tailscale
+    tailscale # VPN
 
     xcolor # color picker
     # gnome extensions
@@ -353,12 +352,13 @@
     gnomeExtensions.appindicator # systray icons
     gnomeExtensions.gsconnect
 
-    mypaint
+    mypaint # MS Paint
     sioyek # pdf viewer
+    diffpdf # diff pdfs
 
     acpi
     psensor
-    delta
+    delta # better diff
     losslesscut-bin
     git
     gh # github cli
@@ -369,6 +369,7 @@
     nil # nix lsp
     rnix-lsp
 
+    # wine emulator
     (wine.override { wineBuild = "wine64"; })
     bottles
 
@@ -392,24 +393,29 @@
     neovim
     segger-jlink
     htop
+
+    # communication
     discord
     element-desktop
-    keepassxc
     signal-desktop
+    slack
+
+    # password manager
+    keepassxc
+    bitwarden
+
     cider # apple music
     vlc
     handbrake
     mc # tui file browser
     nrf-command-line-tools
     epiphany
-    bitwarden
     obsidian
     mpv
     xournal
     obs-studio
     blender
     kdenlive
-    slack
     timeshift
     jellyfin-media-player
     synology-drive-client
@@ -432,18 +438,26 @@
     jq
     tree
     tmux
+
+    # search tools
     fzf
     ripgrep
     fd
+
     lfs
+    
+    # audio
     ffmpeg
     yt-dlp
     spotify
-    croc
+    croc # send/receive files
     gocryptfs
     libreoffice-still
+
+    # terminal emulator
     cool-retro-term
 
+    # `top` alternatives
     htop
     gotop
     btop
@@ -495,6 +509,7 @@
     # vscode-extensions.nvarner.typst-lsp
     # typst-fmt
     # typst-lsp
+
     vscode-fhs
     # TODO: switch to using these vscode extensions https://github.com/nix-community/nix-vscode-extensions
     (vscode-with-extensions.override {
