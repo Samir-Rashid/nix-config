@@ -63,10 +63,16 @@
     #./t2-mic.nix
     ./unstable.nix
     "${
-      builtins.fetchGit { url = "https://github.com/NixOS/nixos-hardware.git"; }
+      builtins.fetchGit { url = "https://github.com/NixOS/nixos-hardware.git";
+      			 rev = "33052d5cad540300eade03d72e74dc8389e34afb";
+			# hash
+			}
     }/apple/t2"
     # "${builtins.fetchGit { url = "https://github.com/kekrby/nixos-hardware.git"; }}/apple/t2"
 
+    <nixos-hardware/apple>
+    <nixos-hardware/common/cpu/intel>
+    <nixos-hardware/common/pc/laptop/ssd>
     <home-manager/nixos>
   ];
 
@@ -118,6 +124,8 @@
       "hid_apple.fnmode=1"
       "hid_apple.iso_layout=0"
       "hid_apple.swap_opt_cmd=1"
+
+      # "apple-gmux.force_igd=y"
     ];
   };
 
@@ -269,6 +277,16 @@
   services.usbmuxd.enable = true;
   hardware.apple-t2.enableAppleSetOsLoader =
     true; # for iGPU
+  # OpenGL & packages for intel integrated graphics
+  hardware.opengl.enable = true;
+  hardware.opengl.extraPackages = with pkgs; [
+    vaapiIntel
+    libvdpau-va-gl
+    intel-media-driver
+    intel-ocl
+  ];
+  boot.initrd.kernelModules = [ "applespi" "spi_pxa2xx_platform" "intel_lpss_pci" "applesmc" ];
+
 
   # https://nixos.wiki/wiki/OpenVPN
   # services.openvpn.servers = {
