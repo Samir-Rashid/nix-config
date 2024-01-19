@@ -4,7 +4,10 @@
 
 # Commands
 # to garbage collect $ nix-store --gc
-# To update nix channels sudo nixos-rebuild switch --upgrade
+# To update nix channels sudo nixos-rebuild switch --upgrade (only update channels `nix-channel --update`)
+  # home-manager https://github.com/nix-community/home-manager/archive/release-23.11.tar.gz
+  # nixos https://channels.nixos.org/nixos-23.11
+  # nixos-hardware https://github.com/NixOS/nixos-hardware/archive/master.tar.gz
 # List generations: nix profile history --profile /nix/var/nix/profiles/system
 # Delete generations: sudo nix profile wipe-history --profile /nix/var/nix/profiles/system --older-than 14d.`
 # https://specific.solutions.limited/blog/recovering-diskspace-in-nixos
@@ -67,12 +70,12 @@
       			 rev = "33052d5cad540300eade03d72e74dc8389e34afb";
 			# hash
 			}
-    }/apple/t2"
+    }/apple"
     # "${builtins.fetchGit { url = "https://github.com/kekrby/nixos-hardware.git"; }}/apple/t2"
 
-    <nixos-hardware/apple>
-    <nixos-hardware/common/cpu/intel>
-    <nixos-hardware/common/pc/laptop/ssd>
+    # TODO: <nixos-hardware>/apple
+    # TODO: <nixos-hardware>/common/cpu/intel
+    # TODO: <nixos-hardware>/common/pc/laptop/ssd
     <home-manager/nixos>
   ];
 
@@ -275,8 +278,7 @@
 
   hardware.bluetooth.enable = true;
   services.usbmuxd.enable = true;
-  hardware.apple-t2.enableAppleSetOsLoader =
-    true; # for iGPU
+  # TODO: hardware.apple-t2.enableAppleSetOsLoader = true; # for iGPU, sets up firmware
   # OpenGL & packages for intel integrated graphics
   hardware.opengl.enable = true;
   hardware.opengl.extraPackages = with pkgs; [
