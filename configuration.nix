@@ -15,6 +15,10 @@
 # nix shell github:DavHau/mach-nix
 # to debug shutdown: journalctl -p 3 -b -1
 
+# clear space with docker:
+# docker system df
+# docker builder prune
+
 # TODO: nondeterminisms
 # - background image
 # - power button gnome setting, dark mode, automatic suspend, battery %, gnome extensions
@@ -67,10 +71,10 @@
     ./unstable.nix
     "${
       builtins.fetchGit { url = "https://github.com/NixOS/nixos-hardware.git";
-      			 rev = "33052d5cad540300eade03d72e74dc8389e34afb";
+      			 # rev = "33052d5cad540300eade03d72e74dc8389e34afb"; # use this to pin to older kernels
 			# hash
 			}
-    }/apple"
+    }/apple/t2"
     # "${builtins.fetchGit { url = "https://github.com/kekrby/nixos-hardware.git"; }}/apple/t2"
 
     # TODO: <nixos-hardware>/apple
@@ -116,7 +120,8 @@
   boot.loader.grub.enable = false;
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  #boot.initrd.kernelModules = [ "applespi" "spi_pxa2xx_platform" "intel_lpss_pci" "applesmc" ];
+  #boot.initrd.kernelModules = [ "applespi" "spi_pxa2xx_platform" "intel_lpss_pci" "applesmc" ]; # This breaks things, specifically applesmc
+
   boot = {
     # using the t2 custom kernel
     # kernelPackages = pkgs.linuxPackages_latest; # TODO: check this
@@ -209,8 +214,8 @@
   networking.extraHosts = ''
     0.0.0.0 www.reddit.com
     0.0.0.0 reddit.com
-    0.0.0.0 youtube.com
-    0.0.0.0 www.youtube.com
+    #0.0.0.0 youtube.com
+    #0.0.0.0 www.youtube.com
   '';
   # can also add stevenblack list from github
   # extrahostsfromsteve = pkgs.fetchurl { url = "https://raw.githubusercontent.com/StevenBlack/hosts/v2.3.7/hosts"; sha256 = "sha256-C39FsyMQ3PJEwcfPsYSF7SZQZGA79m6o70vmwyFMPLM="; }
@@ -278,7 +283,7 @@
 
   hardware.bluetooth.enable = true;
   services.usbmuxd.enable = true;
-  # TODO: hardware.apple-t2.enableAppleSetOsLoader = true; # for iGPU, sets up firmware
+  hardware.apple-t2.enableAppleSetOsLoader = true; # for iGPU, sets up firmware
   # OpenGL & packages for intel integrated graphics
   hardware.opengl.enable = true;
   hardware.opengl.extraPackages = with pkgs; [
@@ -287,8 +292,6 @@
     intel-media-driver
     intel-ocl
   ];
-  boot.initrd.kernelModules = [ "applespi" "spi_pxa2xx_platform" "intel_lpss_pci" "applesmc" ];
-
 
   # https://nixos.wiki/wiki/OpenVPN
   # services.openvpn.servers = {
