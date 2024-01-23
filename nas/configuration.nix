@@ -66,11 +66,15 @@
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.backup = {
     isNormalUser = true;
-    extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
+    extraGroups = [ "wheel" "borg" ]; # Enable ‘sudo’ for the user.
     packages = with pkgs; [
       tree
     ];
   };
+
+  users.users."root".openssh.authorizedKeys.keys = [
+          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILYqGlPP8n+/oBWBP9behbsVHIW2J0uPnInlH15YQpDh samir@nixos"
+  ];
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -86,11 +90,15 @@
   services.borgbackup.repos = {
     main_borg_repo = {
       authorizedKeys = [
-          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOma13g4hdlv+yhaZvtN9uFmaUyNIb+vLiaGoZX12V5V root@nixos"
+          # "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOma13g4hdlv+yhaZvtN9uFmaUyNIb+vLiaGoZX12V5V root@nixos"
+          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILYqGlPP8n+/oBWBP9behbsVHIW2J0uPnInlH15YQpDh samir@nixos"
         ];
-      path = "/var/lib/main_borg_repo";
+      path = "/mnt/sda1/main_borg_repo";
    };
   };
+
+  services.tailscale.enable = true;
+
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;
@@ -104,7 +112,7 @@
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
   services.openssh.settings.PermitRootLogin = "yes";
-  services.openssh.settings.PasswordAuthentication = true;
+  services.openssh.settings.PasswordAuthentication = true; # CRITICAL TODO: FALSE
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];

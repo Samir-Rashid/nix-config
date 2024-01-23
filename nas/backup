@@ -10,5 +10,6 @@ https://nixos.wiki/wiki/Borg_backup
 https://xeiaso.net/blog/borg-backup-2021-01-09/
 https://github.com/Xe/nixos-configs/blob/master/common/services/backup.nix
 https://artemis.sh/2022/06/22/how-i-use-borg.html
-https://schauderbasis.de/posts/backup_from_unix_to_nixos_with_borg/
+https://schauderbasis.de/posts/backup_from_unix_to_nixos_with_borg/ :star:
+https://docs.borgbase.com/setup/borg/synology :star:
 
