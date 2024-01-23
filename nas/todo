@@ -1,0 +1,6 @@
+- reproducible wifi w/ agenix
+- disko
+- flake
+
+wifi and bluetooth don't work, as confirmed by [MatthiasBenaets](https://github.com/MatthiasBenaets/nixos-config/blob/a4b7fc649ab75d2389410b9dc5c07921e0c2458c/hosts/beelink/default.nix#L16)
+

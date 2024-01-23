@@ -1,0 +1,14 @@
+Backup server
+
+- Why to choose borg https://old.reddit.com/r/BorgBackup/comments/v3bwfg/why_should_i_switch_from_restic_to_borg/
+  - this would be a good piece of software to verify
+
+- good GUI clients and [hosting services](https://www.borgbase.com/)
+
+Resources:
+https://nixos.wiki/wiki/Borg_backup
+https://xeiaso.net/blog/borg-backup-2021-01-09/
+https://github.com/Xe/nixos-configs/blob/master/common/services/backup.nix
+https://artemis.sh/2022/06/22/how-i-use-borg.html
+https://schauderbasis.de/posts/backup_from_unix_to_nixos_with_borg/
+
