@@ -89,11 +89,13 @@
             options.mountpoint = "/nix";
           };
 
-          "safe/home" = {
-            type = "zfs_fs";
-            mountpoint = "/home";
-            options.mountpoint = "/home";
-          };
+          # only safe/ datasets will be persisted
+          # don't need to persist home folder for server
+          #"safe/home" = {
+          #  type = "zfs_fs";
+          #  mountpoint = "/home";
+          #  options.mountpoint = "/home";
+          #};
 
           "safe/persist" = {
             type = "zfs_fs";
