@@ -26,10 +26,6 @@
 # TODO: add dotfiles
 # 	external monitor brightness
 # add secrets https://xeiaso.net/blog/nixos-encrypted-secrets-2021-01-20/
-# add busybox, cope, toybox - breaks booting
-# failed to install asahi-linux's speaker dsp https://wiki.t2linux.org/guides/audio-config/
-# 						https://github.com/lemmyg/t2-apple-audio-dsp/tree/speakers_161
-# debug sleep, hibernate
 
 # TODO: https://gitlab.com/magnolia1234/bypass-paywalls-firefox-clean#installation
 
@@ -48,8 +44,6 @@
 #           nix.enableLanguageServer = "true" in vscode to make nix lsp work
 # TODO: https://github.com/nix-community/nix-direnv
 
-# TODO: use kernel `latest`
-
 #  programs = {
 #    ssh.startAgent = true;
 #    command-not-found.enable = true;
@@ -57,9 +51,6 @@
 #    gnupg.agent.enable = true;
 #  };
 #
-#  documentation = {
-#    man.enable = true;
-#  };
 { config, lib, pkgs, ... }:
 
 {
@@ -71,7 +62,9 @@
     ./unstable.nix
     "${
       builtins.fetchGit { url = "https://github.com/NixOS/nixos-hardware.git";
-      			 # rev = "33052d5cad540300eade03d72e74dc8389e34afb"; # use this to pin to older kernels
+      			  rev = "e158702cb8e39dc484c594a8bd733ca623f3309c"; # use this to pin to older kernels
+			  # vmlinux File size limit exceeded
+			  # ulimit -f 2097152
 			# hash
 			}
     }/apple/t2"
@@ -124,7 +117,7 @@
 
   boot = {
     # using the t2 custom kernel
-    # kernelPackages = pkgs.linuxPackages_latest; # TODO: check this
+    # kernelPackages = pkgs.linuxPackages_latest;
 
     kernelParams = [
       # https://help.ubuntu.com/community/AppleKeyboard
@@ -200,7 +193,6 @@
 
   services.tlp.enable = true;
   powerManagement.powertop.enable = true;
-  # try system76 power?
 
   # networking.hostName = "nixos"; # Define your hostname.
   # Pick only one of the below networking options.
@@ -212,8 +204,8 @@
 
   # /etc/hosts
   networking.extraHosts = ''
-    0.0.0.0 www.reddit.com
-    0.0.0.0 reddit.com
+    #0.0.0.0 www.reddit.com
+    #0.0.0.0 reddit.com
     #0.0.0.0 youtube.com
     #0.0.0.0 www.youtube.com
   '';
@@ -285,13 +277,14 @@
   services.usbmuxd.enable = true;
   hardware.apple-t2.enableAppleSetOsLoader = true; # for iGPU, sets up firmware
   # OpenGL & packages for intel integrated graphics
-  hardware.opengl.enable = true;
-  hardware.opengl.extraPackages = with pkgs; [
-    vaapiIntel
-    libvdpau-va-gl
-    intel-media-driver
-    intel-ocl
-  ];
+  # TODO: check this out on new >=6.5 kernel
+  # hardware.opengl.enable = true;
+  # hardware.opengl.extraPackages = with pkgs; [
+  #   vaapiIntel
+  #   libvdpau-va-gl
+  #   intel-media-driver
+  #   intel-ocl
+  # ];
 
   # https://nixos.wiki/wiki/OpenVPN
   # services.openvpn.servers = {
@@ -325,6 +318,8 @@
   programs = {
     zsh = {
       enable = true;
+      autosuggestions.enable = true;
+      syntaxHighlighting.enable = true;
       ohMyZsh = {
         enable = true;
         theme = "robbyrussell";
@@ -356,6 +351,7 @@
     ntfs3g
     exfat
     gnumake
+    remake
     nmap
     pciutils
     s-tui
