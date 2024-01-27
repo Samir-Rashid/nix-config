@@ -70,9 +70,9 @@
     }/apple/t2"
     # "${builtins.fetchGit { url = "https://github.com/kekrby/nixos-hardware.git"; }}/apple/t2"
 
-    # TODO: <nixos-hardware>/apple
-    # TODO: <nixos-hardware>/common/cpu/intel
-    # TODO: <nixos-hardware>/common/pc/laptop/ssd
+    <nixos-hardware/apple>
+    <nixos-hardware/common/cpu/intel>
+    <nixos-hardware/common/pc/laptop/ssd>
     <home-manager/nixos>
   ];
 
@@ -202,6 +202,7 @@
     true; # Easiest to use and most distros use this by default.
   networking.hostName = "nixos";
 
+programs.kdeconnect.enable = true;
   # /etc/hosts
   networking.extraHosts = ''
     #0.0.0.0 www.reddit.com
