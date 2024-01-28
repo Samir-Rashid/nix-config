@@ -2,8 +2,13 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running `nixos-help`).
 
+# TODO: delete nix channels
+# TODO: post multiple channels flake/notflake guide
+# TODO: home manager
+
 # Commands
 # to garbage collect $ nix-store --gc
+# nix-env --delete-generations old
 # To update nix channels sudo nixos-rebuild switch --upgrade (only update channels `nix-channel --update`)
   # home-manager https://github.com/nix-community/home-manager/archive/release-23.11.tar.gz
   # nixos https://channels.nixos.org/nixos-23.11
