@@ -51,7 +51,7 @@
 #    gnupg.agent.enable = true;
 #  };
 #
-{ config, lib, pkgs, inputs, ... }:
+{ config, lib, pkgs, inputs, pkgs-old, ... }:
 
 {
   imports = [
@@ -153,6 +153,7 @@
   programs.direnv.enable = true;
 
   nixpkgs.config.segger-jlink.acceptLicense = true;
+  # nixpkgs-old.config.segger-jlink.acceptLicense = true;
 
   # enable udev rules from packages
   services.udev.packages = [
@@ -163,7 +164,7 @@
       '';
       destination = "/etc/udev/rules.d/99-ftdi.rules";
     })
-    pkgs.segger-jlink
+    pkgs-old.segger-jlink
 
     #gnome.gnome-settings-daemon
   ];
@@ -344,6 +345,7 @@ nix-index.enable = true;
 
   nixpkgs.config.permittedInsecurePackages = [
     "electron-24.8.6"
+    "electron-25.9.0"
   ];
 
   environment.systemPackages = with pkgs; [
@@ -415,9 +417,10 @@ nix-index.enable = true;
 
     ladspaPlugins
     neovim
-    inputs.nixpkgs-old.pkgs.segger-jlink # moved to unstable
-    inputs.nixpkgs-old.legacyPackages.x86_64-linux.segger-jlink # moved to unstable
-    inputs.nixpkgs-old.legacyPackages.x86_64-linux.nrf-command-line-tools
+    pkgs-old.segger-jlink # moved to unstable
+    pkgs-old.nrf-command-line-tools # moved to unstable
+    # inputs.nixpkgs-old.legacyPackages.x86_64-linux.segger-jlink # moved to unstable
+    # inputs.nixpkgs-old.legacyPackages.x86_64-linux.nrf-command-line-tools
     htop
 
     # communication
