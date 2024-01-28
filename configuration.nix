@@ -68,7 +68,6 @@
 			# hash
 			}
     }/apple/t2"
-    # "${builtins.fetchGit { url = "https://github.com/kekrby/nixos-hardware.git"; }}/apple/t2"
 
     <nixos-hardware/apple>
     <nixos-hardware/common/cpu/intel>
@@ -107,7 +106,11 @@
   hardware.facetimehd.enable =
     lib.mkDefault (config.nixpkgs.config.allowUnfree or false);
 
-  #services.mbpfan.enable = lib.mkDefault true;
+  # fan control
+  services.mbpfan.enable = lib.mkDefault true;
+  services.mbpfan.verbose = true;
+  services.mbpfan.aggressive = true;
+  
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.grub.enable = false;
@@ -202,7 +205,6 @@
     true; # Easiest to use and most distros use this by default.
   networking.hostName = "nixos";
 
-programs.kdeconnect.enable = true;
   # /etc/hosts
   networking.extraHosts = ''
     #0.0.0.0 www.reddit.com
@@ -317,6 +319,7 @@ programs.kdeconnect.enable = true;
   };
 
   programs = {
+    kdeconnect.enable = true;
     zsh = {
       enable = true;
       autosuggestions.enable = true;
@@ -356,14 +359,14 @@ programs.kdeconnect.enable = true;
     nmap
     pciutils
     s-tui
-    exa
+    eza
     tailscale # VPN
 
     xcolor # color picker
     # gnome extensions
     gnomeExtensions.pop-shell
     gnomeExtensions.desktop-cube
-    gnomeExtensions.system-monitor
+    gnomeExtensions.system-monitor-2
     gnomeExtensions.burn-my-windows
     gnomeExtensions.grand-theft-focus
     gnomeExtensions.fullscreen-avoider
@@ -411,7 +414,7 @@ programs.kdeconnect.enable = true;
 
     ladspaPlugins
     neovim
-    segger-jlink
+    # segger-jlink # moved to unstable
     htop
 
     # communication

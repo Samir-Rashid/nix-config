@@ -1,22 +1,33 @@
-# flake template from https://www.youtube.com/watch?v=AGVXJ-TIv3Y
 {
-  description = "A very basic flake";
+  description = "Nixos config flake";
 
-  inputs =                                                                  # References Used by Flake
-    {
-      nixpkgs.url = "github:nixos/nixpkgs/nixos-23.05";                     # Stable Nix Packages (Default
-      nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";         # Unstable Nix Packages
+  inputs = {
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-23.11";
+    nixpkgs-2305.url = "github:nixos/nixpkgs/nixos-23.05";
+    nixos-hardware = { url = "github:NixOS/nixos-hardware";
+		flake = false;
+};
 
-      home-manager = {                                                      # User Environment Manager
-        url = "github:nix-community/home-manager/release-23.05";
-        inputs.nixpkgs.follows = "nixpkgs";
-      };
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
-  outputs = { self, nixpkgs, home-manager }: {
-
-    packages.x86_64-linux.hello = nixpkgs.legacyPackages.x86_64-linux.hello;
-
-    packages.x86_64-linux.default = self.packages.x86_64-linux.hello;
-
   };
+
+  outputs = { self, nixpkgs, ... }@inputs:
+    let
+      system = "x86_64-linux";
+      pkgs = nixpkgs.legacyPackages.${system};
+    in
+    {
+    
+      nixosConfigurations.default = nixpkgs.lib.nixosSystem {
+          specialArgs = {inherit inputs;};
+          modules = [ 
+            ./configuration.nix
+            # inputs.home-manager.nixosModules.default
+          ];
+        };
+
+    };
 }
