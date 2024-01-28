@@ -51,7 +51,7 @@
 #    gnupg.agent.enable = true;
 #  };
 #
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, inputs, ... }:
 
 {
   imports = [
@@ -319,6 +319,7 @@
   };
 
   programs = {
+nix-index.enable = true;
     kdeconnect.enable = true;
     zsh = {
       enable = true;
@@ -414,7 +415,9 @@
 
     ladspaPlugins
     neovim
-    # segger-jlink # moved to unstable
+    inputs.nixpkgs-old.pkgs.segger-jlink # moved to unstable
+    inputs.nixpkgs-old.legacyPackages.x86_64-linux.segger-jlink # moved to unstable
+    inputs.nixpkgs-old.legacyPackages.x86_64-linux.nrf-command-line-tools
     htop
 
     # communication
@@ -431,7 +434,6 @@
     vlc
     handbrake
     mc # tui file browser
-    nrf-command-line-tools
     epiphany
     obsidian
     mpv
@@ -622,6 +624,7 @@
     #  })).default;
 
   ];
+
 
   # https://nixos.wiki/wiki/Discord
   nixpkgs.overlays =
