@@ -66,7 +66,7 @@
     ./hardware-configuration.nix
     #./pipewire.nix
     #./t2-mic.nix
-    ./unstable.nix
+    #./unstable.nix
     "${
       builtins.fetchGit { url = "https://github.com/NixOS/nixos-hardware.git";
       			  rev = "e158702cb8e39dc484c594a8bd733ca623f3309c"; # use this to pin to older kernels
@@ -76,10 +76,10 @@
 			}
     }/apple/t2"
 
-    <nixos-hardware/apple>
-    <nixos-hardware/common/cpu/intel>
-    <nixos-hardware/common/pc/laptop/ssd>
-    <home-manager/nixos>
+    #<nixos-hardware/apple> # TODO: this needs to get added for flake
+    #<nixos-hardware/common/cpu/intel>
+    #<nixos-hardware/common/pc/laptop/ssd>
+    #<home-manager/nixos>
   ];
 
   nix = {
@@ -747,7 +747,7 @@
   # Copy the NixOS configuration file and link it from the resulting system
   # (/run/current-system/configuration.nix). This is useful in case you
   # accidentally delete configuration.nix.
-  system.copySystemConfiguration = true;
+  # system.copySystemConfiguration = true; # this is impure
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
