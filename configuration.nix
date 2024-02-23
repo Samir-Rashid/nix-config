@@ -10,9 +10,9 @@
 # to garbage collect $ nix-store --gc
 # nix-env --delete-generations old
 # To update nix channels sudo nixos-rebuild switch --upgrade (only update channels `nix-channel --update`)
-  # home-manager https://github.com/nix-community/home-manager/archive/release-23.11.tar.gz
-  # nixos https://channels.nixos.org/nixos-23.11
-  # nixos-hardware https://github.com/NixOS/nixos-hardware/archive/master.tar.gz
+# home-manager https://github.com/nix-community/home-manager/archive/release-23.11.tar.gz
+# nixos https://channels.nixos.org/nixos-23.11
+# nixos-hardware https://github.com/NixOS/nixos-hardware/archive/master.tar.gz
 # List generations: nix profile history --profile /nix/var/nix/profiles/system
 # Delete generations: sudo nix profile wipe-history --profile /nix/var/nix/profiles/system --older-than 14d.`
 # https://specific.solutions.limited/blog/recovering-diskspace-in-nixos
@@ -117,7 +117,7 @@
   services.mbpfan.enable = lib.mkDefault true;
   services.mbpfan.verbose = true;
   services.mbpfan.aggressive = true;
-  
+
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.grub.enable = false;
@@ -327,7 +327,7 @@
   };
 
   programs = {
-nix-index.enable = true;
+    nix-index.enable = true;
     kdeconnect.enable = true;
     zsh = {
       enable = true;
@@ -480,7 +480,7 @@ nix-index.enable = true;
     fd
 
     lfs
-    
+
     # audio
     ffmpeg
     yt-dlp
@@ -706,14 +706,14 @@ nix-index.enable = true;
   };
 
   programs.command-not-found.enable = false;
-
-  home-manager.users.samir = { pkgs, ... }: {
-    home.stateVersion = "23.05";
-    home.packages = with pkgs; [
-      htop
-    ];
-
-  };
+  #
+  #  home-manager.users.samir = { pkgs, ... }: {
+  #    home.stateVersion = "23.05";
+  #    home.packages = with pkgs; [
+  #      htop
+  #    ];
+  #
+  #  };
 
   # for home-manager, use programs.bash.initExtra instead
   #programs.bash.interactiveShellInit = ''
