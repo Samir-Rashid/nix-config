@@ -49,6 +49,8 @@
 #           nix.enableLanguageServer = "true" in vscode to make nix lsp work
 # TODO: https://github.com/nix-community/nix-direnv
 
+# different methods of storing secrets https://lgug2z.com/articles/handling-secrets-in-nixos-an-overview/
+
 #  programs = {
 #    ssh.startAgent = true;
 #    command-not-found.enable = true;

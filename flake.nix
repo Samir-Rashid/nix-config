@@ -17,7 +17,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-old, ... }@inputs:
+  outputs = { self, home-manager, nixpkgs, nixpkgs-old, ... }@inputs:
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
@@ -40,6 +40,7 @@
 };
           modules = [ 
             ./configuration.nix
+            ./home.nix
             # inputs.home-manager.nixosModules.default
           ];
         };
