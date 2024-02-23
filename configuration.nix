@@ -442,9 +442,9 @@
 
     cider # apple music
     vlc
-    handbrake
+    # handbrake
     mc # tui file browser
-    epiphany
+    # epiphany
     obsidian
     mpv
     xournal
@@ -487,7 +487,7 @@
     spotify
     croc # send/receive files
     gocryptfs
-    libreoffice-still
+    # libreoffice-still
 
     # terminal emulator
     cool-retro-term

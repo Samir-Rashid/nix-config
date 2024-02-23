@@ -49,7 +49,7 @@
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.users = {
-              "samir"= import ./home.nix;
+              "samir" = import ./home.nix;
               #root = import ./root-home.nix;
             };
           }

@@ -17,7 +17,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-	impermanence = {
+    impermanence = {
       url = "github:nix-community/impermanence";
     };
   };
@@ -41,7 +41,7 @@
         nixpkgs.lib.nixosSystem {
           modules = [
             inputs.agenix.nixosModules.default
-            ({ config, ...}: 
+            ({ config, ... }:
               (import ./hosts/${machine.name} { inherit config inputs pkgs; hostname = machine.name; }))
             home-manager.nixosModules.home-manager
             {

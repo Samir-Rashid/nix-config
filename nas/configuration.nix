@@ -6,7 +6,8 @@
 
 {
   imports =
-    [ # Include the results of the hardware scan.
+    [
+      # Include the results of the hardware scan.
       ./hardware-configuration.nix
       ./disko.nix
       ./impermanence.nix
@@ -20,10 +21,10 @@
 
 
   fileSystems = {
-	  "/".options = [ "compress=zstd" ];
-	  "/home".options = [ "compress=zstd" ];
-	  "/nix".options = [ "compress=zstd" "noatime" ];
-	#"/swap".options = [ "noatime" ];
+    "/".options = [ "compress=zstd" ];
+    "/home".options = [ "compress=zstd" ];
+    "/nix".options = [ "compress=zstd" "noatime" ];
+    #"/swap".options = [ "noatime" ];
   };
 
   networking.hostName = "nixos"; # Define your hostname.
@@ -75,7 +76,7 @@
   };
 
   users.users."root".openssh.authorizedKeys.keys = [
-          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILYqGlPP8n+/oBWBP9behbsVHIW2J0uPnInlH15YQpDh samir@nixos"
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILYqGlPP8n+/oBWBP9behbsVHIW2J0uPnInlH15YQpDh samir@nixos"
   ];
 
   # List packages installed in system profile. To search, run:
@@ -92,11 +93,11 @@
   services.borgbackup.repos = {
     main_borg_repo = {
       authorizedKeys = [
-          # "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOma13g4hdlv+yhaZvtN9uFmaUyNIb+vLiaGoZX12V5V root@nixos"
-          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILYqGlPP8n+/oBWBP9behbsVHIW2J0uPnInlH15YQpDh samir@nixos"
-        ];
+        # "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOma13g4hdlv+yhaZvtN9uFmaUyNIb+vLiaGoZX12V5V root@nixos"
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILYqGlPP8n+/oBWBP9behbsVHIW2J0uPnInlH15YQpDh samir@nixos"
+      ];
       path = "/mnt/sda1/main_borg_repo";
-   };
+    };
   };
 
   services.tailscale.enable = true;

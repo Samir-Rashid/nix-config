@@ -1,9 +1,10 @@
-{ config, pkgs, ...}:
+{ config, pkgs, ... }:
 let
   baseconfig = { allowUnfree = true; };
   # unstable = import <nixos-unstable> { config = baseconfig; };
   # bruh = import <nixpkgs-old> { config = baseconfig; };
-in {
+in
+{
   environment.systemPackages = with pkgs; [
     #unstable.google-chrome
     unstable.signal-desktop
