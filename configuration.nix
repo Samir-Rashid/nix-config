@@ -360,7 +360,7 @@
     wget
     scc # cloc # source code line counter
     iwd
-    openvpn
+    # openvpn
     gnu-efi
     ntfs3g
     exfat
@@ -387,12 +387,12 @@
 
     mypaint # MS Paint
     sioyek # pdf viewer
-    diffpdf # diff pdfs
+    # diffpdf # diff pdfs
 
     acpi
     psensor
     delta # better diff
-    losslesscut-bin
+    # losslesscut-bin
     git
     gh # github cli
 
@@ -403,8 +403,8 @@
     rnix-lsp
 
     # wine emulator
-    (wine.override { wineBuild = "wine64"; })
-    bottles
+    # (wine.override { wineBuild = "wine64"; })
+    # bottles
 
     glxinfo
     radeontop
@@ -418,7 +418,7 @@
     trashy
     scrot
     okular
-    hollywood
+    # hollywood
     apostrophe
     i3 # twm
 
@@ -432,7 +432,7 @@
 
     # communication
     discord
-    element-desktop
+    # element-desktop
     signal-desktop
     slack
 
@@ -448,12 +448,12 @@
     obsidian
     mpv
     xournal
-    obs-studio
-    blender
-    kdenlive
-    timeshift
+    #obs-studio
+    #blender
+    #kdenlive
+    #timeshift
     jellyfin-media-player
-    synology-drive-client
+    #synology-drive-client
 
     # shell utilities
     xclip
@@ -539,7 +539,8 @@
     gst_all_1.gst-vaapi
 
     # Text editing stuff
-    texlive.combined.scheme-basic
+    # texlive.combined.scheme-basic # not using tex
+
     #typst
     # vscode-extensions.nvarner.typst-lsp
     # typst-fmt
