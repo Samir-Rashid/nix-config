@@ -40,7 +40,7 @@
 };
           modules = [ 
             ./configuration.nix
-            ./home.nix
+            ./home-manager/home.nix
             # inputs.home-manager.nixosModules.default
           ];
         };
