@@ -1,5 +1,5 @@
 # To rebuild:
-# sudo nixos-rebuild switch --flake /etc/nixos/#default --impure
+# sudo nixos-rebuild switch --flake /etc/nixos/#default
 {
   description = "Nixos config flake";
 
