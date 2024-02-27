@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running `nixos-help`).
 
-# TODO: delete nix channels
+
 # TODO: post multiple channels flake/notflake guide
 # TODO: home manager
 
@@ -83,6 +83,7 @@
   ];
 
   nix = {
+#nixPath = [ "/etc/nix/path" ];
     package = pkgs.nixFlakes;
     extraOptions = "experimental-features = nix-command flakes";
   };
@@ -110,6 +111,27 @@
   */
 
   # system.autoUpgrade.channel = "https://nixos.org/channels/nixos-21.05/";
+nix.channel.enable = false;
+
+  # Map flake inputs to the registry, any flake can go here (only nixpkgs for example)
+  # nix.registry =
+  #   (lib.mapAttrs (_: flake: {inherit flake;}))
+  #   ((lib.filterAttrs (_: lib.isType "flake")) inputs);
+  # nix.nixPath = ["/etc/nix/path"]; # This won't work
+  # nix.settings.nix-path = ["/etc/nix/path"]; # This will fix the missing NIX_PATH
+  #environment.etc."channels/nixpkgs".source = pkgs-old.outPath;
+  # environment.etc."channels/home-manager".source = home-manager.outPath;
+  # nix.nixPath = [
+  #   "nixpkgs=/etc/channels/nixpkgs"
+  #  # "home-manager=/etc/channels/home-manager"
+  # ];
+
+  #nix.registry.nixpkgs.flake = inputs.nixpkgs;
+nix.nixPath = [ "/etc/nix/path" ];
+environment.etc."nix/path/nixpkgs".source = pkgs.path; #inputs.nixpkgs;
+# https://discourse.nixos.org/t/do-flakes-also-set-the-system-channel/19798/2
+# https://discourse.nixos.org/t/problems-after-switching-to-flake-system/24093/8
+
   hardware.facetimehd.enable =
     lib.mkDefault (config.nixpkgs.config.allowUnfree or false);
 
@@ -155,6 +177,16 @@
   };
   nix.settings.auto-optimise-store = true;
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
+
+# You have to set these if you don't have channels
+# idk what this does
+  # nix.registry = {
+  #   nixpkgs.to = {
+  #     type = "path";
+  #     path = pkgs.path;
+  #   };
+  # };
+ # nix.nixPath = [ "nixpkgs=nixpkgs.outPath" ]; # this does not work tot fix nix-shell
 
   # automatically activate nix-shells
   programs.direnv.enable = true;
@@ -229,6 +261,13 @@
   #home.homeDirectory = "/home/samir";
   #home.stateVersion = "23.05";
   #programs.home-manager.enable = true;
+
+# have ld paths to be able to run normal Linux programs
+# programs.nix-ld.enable = true;
+# programs.nix-ld.libraries = with pkgs; [
+#   # Add any missing dynamic libraries for unpackaged 
+#   # programs here, NOT in environment.systemPackages
+# ];
 
   # Set your time zone.
   time.timeZone = "America/Los_Angeles";
@@ -327,7 +366,7 @@
   };
 
   programs = {
-    nix-index.enable = true;
+		  nix-index-database.comma.enable = true;
     kdeconnect.enable = true;
     zsh = {
       enable = true;
@@ -351,8 +390,7 @@
   # $ nix search wget
 
   nixpkgs.config.permittedInsecurePackages = [
-    "electron-24.8.6"
-    "electron-25.9.0"
+"electron-25.9.0"
   ];
 
   environment.systemPackages = with pkgs; [
@@ -616,24 +654,6 @@
           sha256 = "1hp6gjh4xp2m1xlm1jsdzxw9d8frkiidhph6nvl24d0h8z34w49g";
         }];
     })
-
-    nix-index
-    comma # run `nix-index` to generate package index
-    #(let
-    #  comma = (import (pkgs.fetchFromGitHub {
-    #    owner = "nix-community";
-    #    repo = "comma";
-    #    rev = "v1.2.0";
-    #    sha256 = "0000000000000000000000000000000000000000000000000000";
-    #  })).default;
-    #in [ comma ];)
-    #    comma = (import (pkgs.fetchFromGitHub {
-    #    owner = "nix-community";
-    #    repo = "comma";
-    #    rev = "v1.2.0";
-    #    sha256 = "0000000000000000000000000000000000000000000000000000";
-    #  })).default;
-
   ];
 
 
@@ -680,8 +700,6 @@
   #        [ "dssi" "ladspa" "lv2" "lxvst" "vst" "vst3" ]
   #    ));
 
-  # https://github.com/nix-community/nix-index-database
-  #programs.nix-index.enable = true; # for comma
   programs.neovim.vimAlias = true;
   programs.neovim.viAlias = true;
 
@@ -703,8 +721,15 @@
 
       # The UNIX file mode bits
       mode = "0440";
-    };
-  };
+    };};
+  # Pin channels to flake registry entries
+    # lib.mapAttrs'
+    # (name: value: {
+    #   name = "nix/path/${name}";
+    #   value.source = value.flake;
+    # })
+    # config.nix.registry;
+  
 
   programs.command-not-found.enable = false;
   #

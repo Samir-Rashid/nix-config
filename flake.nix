@@ -1,5 +1,7 @@
 # To rebuild:
 # sudo nixos-rebuild switch --flake /etc/nixos/#default
+# To check without building:
+# nix flake check flake.nix
 {
   description = "Nixos config flake";
 
@@ -16,9 +18,11 @@
       url = "github:nix-community/home-manager/release-23.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nix-index-database.url = "github:Mic92/nix-index-database";
+    nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { self, home-manager, nixpkgs, nixpkgs-old, ... }@inputs:
+  outputs = { self, home-manager, nixpkgs, nixpkgs-old, nix-index-database, ... }@inputs:
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
@@ -42,8 +46,7 @@
         };
         modules = [
           ./configuration.nix
-          #./home.nix
-          # inputs.home-manager.nixosModules.default
+          nix-index-database.nixosModules.nix-index
           home-manager.nixosModules.home-manager
           {
             home-manager.useGlobalPkgs = true;
