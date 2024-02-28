@@ -126,9 +126,11 @@
   #  # "home-manager=/etc/channels/home-manager"
   # ];
 
-  nix.registry.nixpkgs.flake = pkgs;
-  nix.nixPath = [ "/etc/nix/path" ];
-  environment.etc."nix/path/nixpkgs".source = pkgs.path; #inputs.nixpkgs;
+  # These DO not work!!!!
+  # nix.registry.nixpkgs.flake = pkgs;
+  # nix.nixPath = [ "/etc/nix/path" ];
+  # environment.etc."nix/path/nixpkgs".source = pkgs.path; #inputs.nixpkgs;
+
   # https://discourse.nixos.org/t/do-flakes-also-set-the-system-channel/19798/2
   # https://discourse.nixos.org/t/problems-after-switching-to-flake-system/24093/8
 
@@ -525,7 +527,7 @@
     spotify
     croc # send/receive files
     gocryptfs
-    # libreoffice-still
+    libreoffice-still
 
     # terminal emulator
     cool-retro-term
