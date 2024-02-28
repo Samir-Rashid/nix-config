@@ -64,8 +64,6 @@
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
-    #./pipewire.nix
-    #./t2-mic.nix
     #./unstable.nix
     "${
       builtins.fetchGit { url = "https://github.com/NixOS/nixos-hardware.git";
@@ -79,7 +77,6 @@
     #<nixos-hardware/apple> # TODO: this needs to get added for flake
     #<nixos-hardware/common/cpu/intel>
     #<nixos-hardware/common/pc/laptop/ssd>
-    #<home-manager/nixos>
   ];
 
   nix = {
@@ -87,6 +84,7 @@
     package = pkgs.nixFlakes;
     extraOptions = "experimental-features = nix-command flakes";
   };
+
   # t2linux specific
   nix.settings = {
     trusted-substituters = [
@@ -127,9 +125,15 @@
   # ];
 
   # These DO not work!!!!
-  # nix.registry.nixpkgs.flake = pkgs;
-  # nix.nixPath = [ "/etc/nix/path" ];
-  # environment.etc."nix/path/nixpkgs".source = pkgs.path; #inputs.nixpkgs;
+  #somethingTemporary = builtins.trace "input is inputs inputs" inputs;
+  #somethingTemporary2 = builtins.trace (builtins.attrNames inputs) inputs;
+  nix.registry.nixpkgs.flake = inputs.nixpkgs;
+  nix.nixPath = [ "/etc/nix/path" "nixpkgs=/etc/nix/path/nixpkgs" ];
+  #environment.etc."nix/path/nixpkgs".source = pkgs; #pkgs.path; #inputs.nixpkgs;
+    systemd.tmpfiles.rules = [
+      "L+ /etc/nix/path/nixpkgs     - - - - ${inputs.nixpkgs}"
+    ];
+# https://github.com/NobbZ/nixos-config/blob/main/nixos/modules/flake.nix
 
   # https://discourse.nixos.org/t/do-flakes-also-set-the-system-channel/19798/2
   # https://discourse.nixos.org/t/problems-after-switching-to-flake-system/24093/8
@@ -205,7 +209,7 @@
       '';
       destination = "/etc/udev/rules.d/99-ftdi.rules";
     })
-    pkgs-old.segger-jlink
+    # pkgs-old.segger-jlink # TODO: return
 
     #gnome.gnome-settings-daemon
   ];
@@ -464,8 +468,10 @@
 
     ladspaPlugins
     neovim
-    pkgs-old.segger-jlink # moved to unstable
-    pkgs-old.nrf-command-line-tools # moved to unstable
+# TODO: return
+    #pkgs-old.segger-jlink # moved to unstable
+    #pkgs-old.nrf-command-line-tools # moved to unstable
+
     # inputs.nixpkgs-old.legacyPackages.x86_64-linux.segger-jlink # moved to unstable
     # inputs.nixpkgs-old.legacyPackages.x86_64-linux.nrf-command-line-tools
     htop
