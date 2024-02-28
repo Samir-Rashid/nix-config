@@ -27,7 +27,14 @@
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
       # pkgs-old = nixpkgs-old.legacyPackages.${system};
-           pkgs-old = import nixpkgs-old {
+      #inputs.nixpkgs-old.config.allowUnfree = true;
+    in
+    {
+
+      nixosConfigurations.default = nixpkgs.lib.nixosSystem {
+        specialArgs = {
+          inherit inputs;
+          pkgs-old = import nixpkgs-old {
             # Refer to the `system` parameter from
             # the outer scope recursively
             system = system;
@@ -36,15 +43,8 @@
             config.allowUnfree = true;
             config.segger-jlink.acceptLicense = true;
           };
-      #inputs.nixpkgs-old.config.allowUnfree = true;
-    in
-    {
-
-      nixosConfigurations.default = nixpkgs.lib.nixosSystem {
-        specialArgs = {
-          inherit inputs;
           #bruh = builtins.trace "The value of someValue is: inputs" inputs;
-       };
+        };
         modules = [
           ./configuration.nix
           nix-index-database.nixosModules.nix-index

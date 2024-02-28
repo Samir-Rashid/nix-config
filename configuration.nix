@@ -130,10 +130,10 @@
   nix.registry.nixpkgs.flake = inputs.nixpkgs;
   nix.nixPath = [ "/etc/nix/path" "nixpkgs=/etc/nix/path/nixpkgs" ];
   #environment.etc."nix/path/nixpkgs".source = pkgs; #pkgs.path; #inputs.nixpkgs;
-    systemd.tmpfiles.rules = [
-      "L+ /etc/nix/path/nixpkgs     - - - - ${inputs.nixpkgs}"
-    ];
-# https://github.com/NobbZ/nixos-config/blob/main/nixos/modules/flake.nix
+  systemd.tmpfiles.rules = [
+    "L+ /etc/nix/path/nixpkgs     - - - - ${inputs.nixpkgs}"
+  ];
+  # https://github.com/NobbZ/nixos-config/blob/main/nixos/modules/flake.nix
 
   # https://discourse.nixos.org/t/do-flakes-also-set-the-system-channel/19798/2
   # https://discourse.nixos.org/t/problems-after-switching-to-flake-system/24093/8
@@ -209,7 +209,7 @@
       '';
       destination = "/etc/udev/rules.d/99-ftdi.rules";
     })
-    # pkgs-old.segger-jlink # TODO: return
+    pkgs-old.segger-jlink
 
     #gnome.gnome-settings-daemon
   ];
@@ -468,9 +468,8 @@
 
     ladspaPlugins
     neovim
-# TODO: return
-    #pkgs-old.segger-jlink # moved to unstable
-    #pkgs-old.nrf-command-line-tools # moved to unstable
+    pkgs-old.segger-jlink # moved to unstable
+    pkgs-old.nrf-command-line-tools # moved to unstable
 
     # inputs.nixpkgs-old.legacyPackages.x86_64-linux.segger-jlink # moved to unstable
     # inputs.nixpkgs-old.legacyPackages.x86_64-linux.nrf-command-line-tools
