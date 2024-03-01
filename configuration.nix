@@ -65,14 +65,14 @@
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
     #./unstable.nix
-    "${
-      builtins.fetchGit { url = "https://github.com/NixOS/nixos-hardware.git";
-      			  rev = "e158702cb8e39dc484c594a8bd733ca623f3309c"; # use this to pin to older kernels
-			  # vmlinux File size limit exceeded
-			  # ulimit -f 2097152
-			# hash
-			}
-    }/apple/t2"
+    # "${
+    #   builtins.fetchGit { url = "https://github.com/NixOS/nixos-hardware.git";
+    #   			  rev = "e158702cb8e39dc484c594a8bd733ca623f3309c"; # use this to pin to older kernels
+	# 		  # vmlinux File size limit exceeded
+	# 		  # ulimit -f 2097152
+	# 		# hash
+	# 		}
+    # }/apple/t2"
 
     #<nixos-hardware/apple> # TODO: this needs to get added for flake
     #<nixos-hardware/common/cpu/intel>

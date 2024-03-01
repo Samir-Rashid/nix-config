@@ -9,9 +9,10 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-23.11";
     nixpkgs-old.url = "github:nixos/nixpkgs/nixos-23.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+# NOTE: you have to specify branches on urls, otherwise it fails miserably with a cryptic error
     nixos-hardware = {
-      url = "github:NixOS/nixos-hardware";
-      flake = false;
+      url = "github:NixOS/nixos-hardware/master";
+      # flake = false;
     };
 
     home-manager = {
@@ -44,9 +45,16 @@
             config.segger-jlink.acceptLicense = true;
           };
           #bruh = builtins.trace "The value of someValue is: inputs" inputs;
+  somethingTemporary = builtins.trace (builtins.attrNames inputs) inputs;
         };
         modules = [
           ./configuration.nix
+           # hardware stuff
+           inputs.nixos-hardware.nixosModules.apple-t2
+           inputs.nixos-hardware.nixosModules.common-cpu-intel
+           inputs.nixos-hardware.nixosModules.common-pc-laptop-ssd
+           # TODO: this is nixos-hardware/apple is not in the flake, need to add it
+
           nix-index-database.nixosModules.nix-index
           home-manager.nixosModules.home-manager
           {
