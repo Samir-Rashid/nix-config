@@ -116,7 +116,7 @@
   #   (lib.mapAttrs (_: flake: {inherit flake;}))
   #   ((lib.filterAttrs (_: lib.isType "flake")) inputs);
   # nix.nixPath = ["/etc/nix/path"]; # This won't work
-  # nix.settings.nix-path = ["/etc/nix/path"]; # This will fix the missing NIX_PATH
+  nix.settings.nix-path = ["/etc/nix/path"]; # This will fix the missing NIX_PATH
   #environment.etc."channels/nixpkgs".source = pkgs-old.outPath;
   # environment.etc."channels/home-manager".source = home-manager.outPath;
   # nix.nixPath = [
@@ -124,11 +124,9 @@
   #  # "home-manager=/etc/channels/home-manager"
   # ];
 
-  # These DO not work!!!!
-  #somethingTemporary = builtins.trace "input is inputs inputs" inputs;
-  #somethingTemporary2 = builtins.trace (builtins.attrNames inputs) inputs;
+  #somethingTemporary = builtins.trace (builtins.attrNames inputs) inputs;
   nix.registry.nixpkgs.flake = inputs.nixpkgs;
-  nix.nixPath = [ "/etc/nix/path" "nixpkgs=/etc/nix/path/nixpkgs" ];
+  nix.nixPath = [ "nixpkgs=/etc/nix/path/nixpkgs" "/nix/var/nix/profiles/per-user/root/channels" ];
   #environment.etc."nix/path/nixpkgs".source = pkgs; #pkgs.path; #inputs.nixpkgs;
   systemd.tmpfiles.rules = [
     "L+ /etc/nix/path/nixpkgs     - - - - ${inputs.nixpkgs}"
@@ -450,6 +448,8 @@
     # (wine.override { wineBuild = "wine64"; })
     # bottles
 
+	activitywatch
+
     glxinfo
     radeontop
     gnome.gnome-sound-recorder
@@ -526,7 +526,10 @@
 
     lfs
 
+	pinta
+
     # audio
+    #zoom-us
     ffmpeg
     yt-dlp
     spotify
