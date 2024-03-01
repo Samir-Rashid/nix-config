@@ -1,6 +1,11 @@
 # Samir's nix-config [![built with nix](https://img.shields.io/static/v1?logo=nixos&logoColor=white&label=&message=Built%20with%20Nix&color=41439a)](https://builtwithnix.org)
 Nix configuration for MacBook 16,1. 2019 MacBook Pro 16 inch.
 
+> [!TIP]
+> If you just want to reference a minimal config for a MacBook 16,1, look at the [minimal config](/minimal-configuration.nix).
+>
+> If you want to meet more Nixers, check out [Nixcon NA](https://2024-na.nixcon.org/), the convention all about Nix in North America.
+
 What's working:
 - everything
   - display, audio, speakers, trackpad, keyboard, camera, mic, battery life, gpu, igpu, bluetooth, wifi, dual boot, touchbar, ...
