@@ -1,6 +1,7 @@
 # Edit this configuration file to define what should be installed on
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running `nixos-help`).
+# sudo nixos-rebuild switch -j1 --flake ./#default
 
 
 # TODO: post multiple channels flake/notflake guide
@@ -126,10 +127,12 @@
 
   #somethingTemporary = builtins.trace (builtins.attrNames inputs) inputs;
   nix.registry.nixpkgs.flake = inputs.nixpkgs;
-  nix.nixPath = [ "nixpkgs=/etc/nix/path/nixpkgs" "/nix/var/nix/profiles/per-user/root/channels" ];
+  nix.nixPath = [ "nixpkgs=/etc/nix/path/nixpkgs" "nixpkgs-old=/etc/nix/path/nixpkgs-old" "nixpkgs-unstable=/etc/nix/path/nixpkgs-unstable" "/nix/var/nix/profiles/per-user/root/channels" ];
   #environment.etc."nix/path/nixpkgs".source = pkgs; #pkgs.path; #inputs.nixpkgs;
   systemd.tmpfiles.rules = [
     "L+ /etc/nix/path/nixpkgs     - - - - ${inputs.nixpkgs}"
+    "L+ /etc/nix/path/nixpkgs-unstable     - - - - ${inputs.nixpkgs-unstable}"
+    "L+ /etc/nix/path/nixpkgs-old      - - - - ${inputs.nixpkgs-old}"
   ];
   # https://github.com/NobbZ/nixos-config/blob/main/nixos/modules/flake.nix
 
@@ -196,7 +199,6 @@
   programs.direnv.enable = true;
 
   nixpkgs.config.segger-jlink.acceptLicense = true;
-  # nixpkgs-old.config.segger-jlink.acceptLicense = true;
 
   # enable udev rules from packages
   services.udev.packages = [
@@ -261,6 +263,12 @@
   # networking.extraHosts = '' ${builtins.readFile extrahostsfromsteve} '';
 
   virtualisation.docker.enable = true;
+   users.extraGroups.vboxusers.members = [ "samir" ];
+    virtualisation.virtualbox.host.enable = true;
+    virtualisation.virtualbox.host.enableExtensionPack = true;
+    virtualisation.virtualbox.guest.enable = true;
+    virtualisation.virtualbox.guest.x11 = true;
+
   #home.username = "samir";
   #home.homeDirectory = "/home/samir";
   #home.stateVersion = "23.05";
@@ -396,6 +404,9 @@
   nixpkgs.config.permittedInsecurePackages = [
     "electron-25.9.0"
   ];
+# inputs.nixpkgs-unstable.config.permittedInsecurePackages = [
+#		"segger-jlink-qt4-794a"
+#];
 
   environment.systemPackages = with pkgs; [
     vim
@@ -418,6 +429,7 @@
     gpick # color picker that works
 
     # gnome extensions
+gnome.gnome-tweaks
     gnomeExtensions.pop-shell
     gnomeExtensions.desktop-cube
     gnomeExtensions.system-monitor-2
@@ -456,7 +468,7 @@
     radeontop
     gnome.gnome-sound-recorder
     radeon-profile
-    #    nrf-command-line-tools
+    pkgs-old.nrf-command-line-tools
     #nrfconnect
     curl
     #libbass
@@ -473,8 +485,6 @@
     pkgs-old.segger-jlink # moved to unstable
     pkgs-old.nrf-command-line-tools # moved to unstable
 
-    # inputs.nixpkgs-old.legacyPackages.x86_64-linux.segger-jlink # moved to unstable
-    # inputs.nixpkgs-old.legacyPackages.x86_64-linux.nrf-command-line-tools
     htop
 
     # communication
@@ -601,29 +611,29 @@
     (vscode-with-extensions.override {
       vscodeExtensions = with vscode-extensions;
         [
-          bbenoist.nix
-          ms-python.python
-          ms-azuretools.vscode-docker
-          ms-vscode-remote.remote-ssh
-          ms-vscode.cmake-tools
-          ms-vscode.cpptools
-          twxs.cmake
-          eamodio.gitlens
-          ms-toolsai.jupyter
-          ms-python.python
-          ms-vscode.makefile-tools
-          rust-lang.rust-analyzer
-          davidanson.vscode-markdownlint
+          # bbenoist.nix
+          # ms-python.python
+          # ms-azuretools.vscode-docker
+          # ms-vscode-remote.remote-ssh
+          # ms-vscode.cmake-tools
+          # ms-vscode.cpptools
+          # twxs.cmake
+          # eamodio.gitlens
+          # ms-toolsai.jupyter
+          # ms-python.python
+          # ms-vscode.makefile-tools
+          # rust-lang.rust-analyzer
+          # davidanson.vscode-markdownlint
 
           # ms-vscode-remote.remote-containers
-          vscode-icons-team.vscode-icons
+          # vscode-icons-team.vscode-icons
 
-          formulahendry.auto-rename-tag
+          # formulahendry.auto-rename-tag
           # GitHub.vscode-pull-request-github
-          redhat.vscode-yaml
-          wholroyd.jinja
+          # redhat.vscode-yaml
+          # wholroyd.jinja
           # TabNine.tabnine-vscode
-          vscodevim.vim
+          # vscodevim.vim
 
           # aaron-bond.better-comments
           # wayou.vscode-todo-highlight
