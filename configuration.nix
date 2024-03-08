@@ -415,6 +415,8 @@
     tailscale # VPN
 
     xcolor # color picker
+    gpick # color picker that works
+
     # gnome extensions
     gnomeExtensions.pop-shell
     gnomeExtensions.desktop-cube
