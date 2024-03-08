@@ -10,14 +10,11 @@
 # Commands
 # to garbage collect $ nix-store --gc
 # nix-env --delete-generations old
-# To update nix channels sudo nixos-rebuild switch --upgrade (only update channels `nix-channel --update`)
-# home-manager https://github.com/nix-community/home-manager/archive/release-23.11.tar.gz
-# nixos https://channels.nixos.org/nixos-23.11
-# nixos-hardware https://github.com/NixOS/nixos-hardware/archive/master.tar.gz
+
 # List generations: nix profile history --profile /nix/var/nix/profiles/system
 # Delete generations: sudo nix profile wipe-history --profile /nix/var/nix/profiles/system --older-than 14d.`
 # https://specific.solutions.limited/blog/recovering-diskspace-in-nixos
-# deduplicate nix-store pkgs nix-store --optimise
+
 # nix shell github:DavHau/mach-nix
 # to debug shutdown: journalctl -p 3 -b -1
 
@@ -32,6 +29,7 @@
 # TODO: add dotfiles
 # 	external monitor brightness
 # add secrets https://xeiaso.net/blog/nixos-encrypted-secrets-2021-01-20/
+# different methods of storing secrets https://lgug2z.com/articles/handling-secrets-in-nixos-an-overview/
 
 # TODO: https://gitlab.com/magnolia1234/bypass-paywalls-firefox-clean#installation
 
@@ -40,25 +38,15 @@
 # TODO: reinstall and make reproducible wifi firmware in config, change fs
 
 # TODO: remove networkmanager notifications (breaks touchid)
-#sudo sh -c 'echo "# Disable for now T2 chip internal usb ethernet
+# Disable for now T2 chip internal usb ethernet
+#sudo sh -c 'echo "
 #blacklist cdc_ncm
 #blacklist cdc_mbim" >> /etc/modprobe.d/blacklist.conf'
 
-# TODO: alias xclip to `xclip -selection clipboard`
 # vim config: set clipboard=unnamedplus
 # TODO: make home manager firefox and vscode extensions reproducible. 
-#           nix.enableLanguageServer = "true" in vscode to make nix lsp work
 # TODO: https://github.com/nix-community/nix-direnv
 
-# different methods of storing secrets https://lgug2z.com/articles/handling-secrets-in-nixos-an-overview/
-
-#  programs = {
-#    ssh.startAgent = true;
-#    command-not-found.enable = true;
-#    adb.enable = true;
-#    gnupg.agent.enable = true;
-#  };
-#
 { config, lib, pkgs, inputs, pkgs-old, ... }:
 
 {
@@ -112,30 +100,17 @@
   # system.autoUpgrade.channel = "https://nixos.org/channels/nixos-21.05/";
   nix.channel.enable = false;
 
-  # Map flake inputs to the registry, any flake can go here (only nixpkgs for example)
-  # nix.registry =
-  #   (lib.mapAttrs (_: flake: {inherit flake;}))
-  #   ((lib.filterAttrs (_: lib.isType "flake")) inputs);
-  # nix.nixPath = ["/etc/nix/path"]; # This won't work
-  nix.settings.nix-path = ["/etc/nix/path"]; # This will fix the missing NIX_PATH
-  #environment.etc."channels/nixpkgs".source = pkgs-old.outPath;
-  # environment.etc."channels/home-manager".source = home-manager.outPath;
-  # nix.nixPath = [
-  #   "nixpkgs=/etc/channels/nixpkgs"
-  #  # "home-manager=/etc/channels/home-manager"
-  # ];
+ nix.settings.nix-path = ["/etc/nix/path"]; # This will fix the missing NIX_PATH
 
   #somethingTemporary = builtins.trace (builtins.attrNames inputs) inputs;
   nix.registry.nixpkgs.flake = inputs.nixpkgs;
   nix.nixPath = [ "nixpkgs=/etc/nix/path/nixpkgs" "nixpkgs-old=/etc/nix/path/nixpkgs-old" "nixpkgs-unstable=/etc/nix/path/nixpkgs-unstable" "/nix/var/nix/profiles/per-user/root/channels" ];
-  #environment.etc."nix/path/nixpkgs".source = pkgs; #pkgs.path; #inputs.nixpkgs;
   systemd.tmpfiles.rules = [
     "L+ /etc/nix/path/nixpkgs     - - - - ${inputs.nixpkgs}"
     "L+ /etc/nix/path/nixpkgs-unstable     - - - - ${inputs.nixpkgs-unstable}"
     "L+ /etc/nix/path/nixpkgs-old      - - - - ${inputs.nixpkgs-old}"
   ];
   # https://github.com/NobbZ/nixos-config/blob/main/nixos/modules/flake.nix
-
   # https://discourse.nixos.org/t/do-flakes-also-set-the-system-channel/19798/2
   # https://discourse.nixos.org/t/problems-after-switching-to-flake-system/24093/8
 
@@ -185,17 +160,7 @@
   nix.settings.auto-optimise-store = true;
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
-  # You have to set these if you don't have channels
-  # idk what this does
-  # nix.registry = {
-  #   nixpkgs.to = {
-  #     type = "path";
-  #     path = pkgs.path;
-  #   };
-  # };
-  # nix.nixPath = [ "nixpkgs=nixpkgs.outPath" ]; # this does not work tot fix nix-shell
-
-  # automatically activate nix-shells
+    # automatically activate nix-shells
   programs.direnv.enable = true;
 
   nixpkgs.config.segger-jlink.acceptLicense = true;
@@ -243,13 +208,12 @@
   services.tlp.enable = true;
   powerManagement.powertop.enable = true;
 
-  # networking.hostName = "nixos"; # Define your hostname.
+  networking.hostName = "nixos"; # Define your hostname.
   # Pick only one of the below networking options.
   #networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
   nixpkgs.config.allowUnfree = true;
   networking.networkmanager.enable =
     true; # Easiest to use and most distros use this by default.
-  networking.hostName = "nixos";
 
   # /etc/hosts
   networking.extraHosts = ''
@@ -263,11 +227,12 @@
   # networking.extraHosts = '' ${builtins.readFile extrahostsfromsteve} '';
 
   virtualisation.docker.enable = true;
+# virtualbox
    users.extraGroups.vboxusers.members = [ "samir" ];
-    virtualisation.virtualbox.host.enable = true;
-    virtualisation.virtualbox.host.enableExtensionPack = true;
-    virtualisation.virtualbox.guest.enable = true;
-    virtualisation.virtualbox.guest.x11 = true;
+    # virtualisation.virtualbox.host.enable = true;
+    # virtualisation.virtualbox.host.enableExtensionPack = true;
+    # virtualisation.virtualbox.guest.enable = true;
+    # virtualisation.virtualbox.guest.x11 = true;
 
   #home.username = "samir";
   #home.homeDirectory = "/home/samir";
@@ -464,10 +429,10 @@ gnome.gnome-tweaks
 
 	activitywatch
 
-    glxinfo
-    radeontop
+    #glxinfo
+    #radeontop
     gnome.gnome-sound-recorder
-    radeon-profile
+    #radeon-profile
     pkgs-old.nrf-command-line-tools
     #nrfconnect
     curl
@@ -478,7 +443,7 @@ gnome.gnome-tweaks
     okular
     # hollywood
     apostrophe
-    i3 # twm
+    #i3 # twm
 
     ladspaPlugins
     neovim

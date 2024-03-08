@@ -1,10 +1,14 @@
 # This is a minimal non-flake configuration.nix for a t2 MacBook (Intel CPU) running NixOS.
+# NOTE: This file does not compile on it's own. It is a collection of patches for reference
+# of the things you should add to your config.
 # Made by Alina
 
 # Add these channels to your system.
 # channels:
 # nixos https://nixos.org/channels/nixos-23.11
 # nixos-hardware https://github.com/NixOS/nixos-hardware/archive/master.tar.gz
+# optionally:
+# home-manager https://github.com/nix-community/home-manager/archive/release-23.11.tar.gz
 
 { config, lib, pkgs, ... }:
 
