@@ -5,7 +5,6 @@
 
 
 # TODO: post multiple channels flake/notflake guide
-# TODO: home manager
 
 # Commands
 # to garbage collect $ nix-store --gc
@@ -54,14 +53,8 @@
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
     #./unstable.nix
-    # "${
-    #   builtins.fetchGit { url = "https://github.com/NixOS/nixos-hardware.git";
-    #   			  rev = "e158702cb8e39dc484c594a8bd733ca623f3309c"; # use this to pin to older kernels
-	# 		  # vmlinux File size limit exceeded
-	# 		  # ulimit -f 2097152
-	# 		# hash
-	# 		}
-    # }/apple/t2"
+    		  # vmlinux File size limit exceeded
+     		  # ulimit -f 2097152
 
     #<nixos-hardware/apple> # TODO: this needs to get added for flake
     #<nixos-hardware/common/cpu/intel>
@@ -100,7 +93,7 @@
   # system.autoUpgrade.channel = "https://nixos.org/channels/nixos-21.05/";
   nix.channel.enable = false;
 
- nix.settings.nix-path = ["/etc/nix/path"]; # This will fix the missing NIX_PATH
+  nix.settings.nix-path = [ "/etc/nix/path" ]; # This will fix the missing NIX_PATH
 
   #somethingTemporary = builtins.trace (builtins.attrNames inputs) inputs;
   nix.registry.nixpkgs.flake = inputs.nixpkgs;
@@ -129,17 +122,15 @@
   boot.loader.efi.canTouchEfiVariables = true;
   #boot.initrd.kernelModules = [ "applespi" "spi_pxa2xx_platform" "intel_lpss_pci" "applesmc" ]; # This breaks things, specifically applesmc
 
-  boot = {
-    # using the t2 custom kernel
-    # kernelPackages = pkgs.linuxPackages_latest;
 
+    # using the t2 custom kernel
+  boot = {
     kernelParams = [
       # https://help.ubuntu.com/community/AppleKeyboard
       # https://wiki.archlinux.org/index.php/Apple_Keyboard
       "hid_apple.fnmode=1"
       "hid_apple.iso_layout=0"
       "hid_apple.swap_opt_cmd=1"
-
       # "apple-gmux.force_igd=y"
     ];
   };
@@ -151,6 +142,7 @@
     lidSwitchExternalPower = "lock";
   };
 
+  # filesystem cleanup
   boot.tmp.cleanOnBoot = true;
   nix.gc = {
     automatic = true;
@@ -160,7 +152,7 @@
   nix.settings.auto-optimise-store = true;
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
-    # automatically activate nix-shells
+  # automatically activate nix-shells
   programs.direnv.enable = true;
 
   nixpkgs.config.segger-jlink.acceptLicense = true;
@@ -179,13 +171,8 @@
     #gnome.gnome-settings-daemon
   ];
 
-  #services.udev = {
-  #	extraRules = ''
-  #		ATTRS{idVendor}=="0403", ATTRS{idProduct}=="6015", MODE="0666"
-  #		ATTRS{idVendor}=="2341", ATTRS{idProduct}=="005a", MODE="0666"
-  #'';
-  #};
-  # https://nixos.wiki/wiki/Laptop
+# Power management
+ # https://nixos.wiki/wiki/Laptop
   powerManagement.enable = true;
   powerManagement.cpuFreqGovernor = "schedutil";
   services.thermald.enable = true;
@@ -204,16 +191,13 @@
       turbo = "never";
     };
   };
-
   services.tlp.enable = true;
   powerManagement.powertop.enable = true;
 
   networking.hostName = "nixos"; # Define your hostname.
-  # Pick only one of the below networking options.
-  #networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
   nixpkgs.config.allowUnfree = true;
   networking.networkmanager.enable =
-    true; # Easiest to use and most distros use this by default.
+    true; # Easiest to use (vs wpa_supplicant) and most distros use this by default.
 
   # /etc/hosts
   networking.extraHosts = ''
@@ -227,12 +211,12 @@
   # networking.extraHosts = '' ${builtins.readFile extrahostsfromsteve} '';
 
   virtualisation.docker.enable = true;
-# virtualbox
-   users.extraGroups.vboxusers.members = [ "samir" ];
-    # virtualisation.virtualbox.host.enable = true;
-    # virtualisation.virtualbox.host.enableExtensionPack = true;
-    # virtualisation.virtualbox.guest.enable = true;
-    # virtualisation.virtualbox.guest.x11 = true;
+  # virtualbox
+  # users.extraGroups.vboxusers.members = [ "samir" ];
+  # virtualisation.virtualbox.host.enable = true;
+  # virtualisation.virtualbox.host.enableExtensionPack = true;
+  # virtualisation.virtualbox.guest.enable = true;
+  # virtualisation.virtualbox.guest.x11 = true;
 
   #home.username = "samir";
   #home.homeDirectory = "/home/samir";
@@ -248,10 +232,6 @@
 
   # Set your time zone.
   time.timeZone = "America/Los_Angeles";
-
-  # Configure network proxy if necessary
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
@@ -280,6 +260,11 @@
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
+services.avahi = {
+  enable = true;
+  nssmdns = true;
+  openFirewall = true;
+};
 
   # Enable sound with pipewire.
   sound.enable = true;
@@ -294,7 +279,6 @@
     # If you want to use JACK applications, uncomment this
     jack.enable = true;
     wireplumber.enable = true;
-
     # use the example session manager (no others are packaged yet so this is enabled by default,
     # no need to redefine it in your config for now)
     #media-session.enable = true;
@@ -313,6 +297,7 @@
   #   intel-ocl
   # ];
 
+  # VPN
   # https://nixos.wiki/wiki/OpenVPN
   # services.openvpn.servers = {
   #   homeVPN = {
@@ -369,9 +354,9 @@
   nixpkgs.config.permittedInsecurePackages = [
     "electron-25.9.0"
   ];
-# inputs.nixpkgs-unstable.config.permittedInsecurePackages = [
-#		"segger-jlink-qt4-794a"
-#];
+  # inputs.nixpkgs-unstable.config.permittedInsecurePackages = [
+  #		"segger-jlink-qt4-794a"
+  #];
 
   environment.systemPackages = with pkgs; [
     vim
@@ -394,7 +379,7 @@
     gpick # color picker that works
 
     # gnome extensions
-gnome.gnome-tweaks
+    gnome.gnome-tweaks
     gnomeExtensions.pop-shell
     gnomeExtensions.desktop-cube
     gnomeExtensions.system-monitor-2
@@ -427,7 +412,7 @@ gnome.gnome-tweaks
     # (wine.override { wineBuild = "wine64"; })
     # bottles
 
-	activitywatch
+    activitywatch
 
     #glxinfo
     #radeontop
@@ -503,7 +488,7 @@ gnome.gnome-tweaks
 
     lfs
 
-	pinta
+    pinta # MS Paint
 
     # audio
     #zoom-us
@@ -522,6 +507,7 @@ gnome.gnome-tweaks
     gotop
     btop
 
+/*
     # trying to get audio dsp to work
     #carla # gui thing
     #lsp-plugins
@@ -562,6 +548,7 @@ gnome.gnome-tweaks
     gst_all_1.gst-libav
     # Support the Video Audio (Hardware) Acceleration API
     gst_all_1.gst-vaapi
+*/
 
     # Text editing stuff
     # texlive.combined.scheme-basic # not using tex
@@ -662,19 +649,19 @@ gnome.gnome-tweaks
   # TODO: add krisp workaround to config
   # https://github.com/NixOS/nixpkgs/issues/195512
 
-  environment.localBinInPath = true;
-  environment.variables = {
-    DSSI_PATH =
-      "$HOME/.dssi:$HOME/.nix-profile/lib/dssi:/run/current-system/sw/lib/dssi";
-    LADSPA_PATH =
-      "$HOME/.ladspa:$HOME/.nix-profile/lib/ladspa:/run/current-system/sw/lib/ladspa";
-    LV2_PATH =
-      "$HOME/.lv2:$HOME/.nix-profile/lib/lv2:/run/current-system/sw/lib/lv2";
-    LXVST_PATH =
-      "$HOME/.lxvst:$HOME/.nix-profile/lib/lxvst:/run/current-system/sw/lib/lxvst";
-    VST_PATH =
-      "$HOME/.vst:$HOME/.nix-profile/lib/vst:/run/current-system/sw/lib/vst";
-  };
+  # environment.localBinInPath = true;
+  # environment.variables = {
+  #   DSSI_PATH =
+  #     "$HOME/.dssi:$HOME/.nix-profile/lib/dssi:/run/current-system/sw/lib/dssi";
+  #   LADSPA_PATH =
+  #     "$HOME/.ladspa:$HOME/.nix-profile/lib/ladspa:/run/current-system/sw/lib/ladspa";
+  #   LV2_PATH =
+  #     "$HOME/.lv2:$HOME/.nix-profile/lib/lv2:/run/current-system/sw/lib/lv2";
+  #   LXVST_PATH =
+  #     "$HOME/.lxvst:$HOME/.nix-profile/lib/lxvst:/run/current-system/sw/lib/lxvst";
+  #   VST_PATH =
+  #     "$HOME/.vst:$HOME/.nix-profile/lib/vst:/run/current-system/sw/lib/vst";
+  # };
 
   #  environment.variables =
   #    (with lib;
@@ -746,11 +733,6 @@ gnome.gnome-tweaks
 
   #  wantedBy = [ "multi-user.target" ];
   #};
-
-  # List services that you want to enable:
-
-  # Enable the OpenSSH daemon.
-  # services.openssh.enable = true;
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];

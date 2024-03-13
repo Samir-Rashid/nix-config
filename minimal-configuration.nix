@@ -32,7 +32,7 @@
   };
 
 
-    # iGPU
+  # iGPU
   hardware.apple-t2.enableAppleSetOsLoader = true;
 
   # Apple Wireless brcm firmware
