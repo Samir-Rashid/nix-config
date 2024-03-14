@@ -53,8 +53,8 @@
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
     #./unstable.nix
-    		  # vmlinux File size limit exceeded
-     		  # ulimit -f 2097152
+    # vmlinux File size limit exceeded
+    # ulimit -f 2097152
 
     #<nixos-hardware/apple> # TODO: this needs to get added for flake
     #<nixos-hardware/common/cpu/intel>
@@ -123,7 +123,7 @@
   #boot.initrd.kernelModules = [ "applespi" "spi_pxa2xx_platform" "intel_lpss_pci" "applesmc" ]; # This breaks things, specifically applesmc
 
 
-    # using the t2 custom kernel
+  # using the t2 custom kernel
   boot = {
     kernelParams = [
       # https://help.ubuntu.com/community/AppleKeyboard
@@ -171,8 +171,8 @@
     #gnome.gnome-settings-daemon
   ];
 
-# Power management
- # https://nixos.wiki/wiki/Laptop
+  # Power management
+  # https://nixos.wiki/wiki/Laptop
   powerManagement.enable = true;
   powerManagement.cpuFreqGovernor = "schedutil";
   services.thermald.enable = true;
@@ -260,11 +260,11 @@
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
-services.avahi = {
-  enable = true;
-  nssmdns = true;
-  openFirewall = true;
-};
+  services.avahi = {
+    enable = true;
+    nssmdns = true;
+    openFirewall = true;
+  };
 
   # Enable sound with pipewire.
   sound.enable = true;
@@ -506,50 +506,6 @@ services.avahi = {
     htop
     gotop
     btop
-
-/*
-    # trying to get audio dsp to work
-    #carla # gui thing
-    #lsp-plugins
-    rnnoise-plugin
-    #distrho
-    #ir.lv2
-    #ardour
-    #easyeffects
-    calf
-    #jack2
-    swh_lv2
-    lv2
-    lilv
-
-    pipewire
-    #pipewire-audio-client-libraries 
-    #libpipewire-0.3-modules 
-    #libspa-0.2-bluetooth 
-    #libspa-0.2-jack 
-    #libspa-0.2-modules 
-    #pipewire-pulse 
-    #pipewire-bin 
-    #pipewire-tests
-    wireplumber
-    lsp-plugins
-    ladspaPlugins
-
-    # Gstreamer
-    # Video/Audio data composition framework tools like "gst-inspect", "gst-launch" ...
-    gst_all_1.gstreamer
-    # Common plugins like "filesrc" to combine within e.g. gst-launch
-    gst_all_1.gst-plugins-base
-    # Specialized plugins separated by quality
-    gst_all_1.gst-plugins-good
-    gst_all_1.gst-plugins-bad
-    gst_all_1.gst-plugins-ugly
-    # Plugins to reuse ffmpeg to play almost every video format
-    gst_all_1.gst-libav
-    # Support the Video Audio (Hardware) Acceleration API
-    gst_all_1.gst-vaapi
-*/
-
     # Text editing stuff
     # texlive.combined.scheme-basic # not using tex
 
@@ -648,32 +604,6 @@ services.avahi = {
     [ myOverlay ];
   # TODO: add krisp workaround to config
   # https://github.com/NixOS/nixpkgs/issues/195512
-
-  # environment.localBinInPath = true;
-  # environment.variables = {
-  #   DSSI_PATH =
-  #     "$HOME/.dssi:$HOME/.nix-profile/lib/dssi:/run/current-system/sw/lib/dssi";
-  #   LADSPA_PATH =
-  #     "$HOME/.ladspa:$HOME/.nix-profile/lib/ladspa:/run/current-system/sw/lib/ladspa";
-  #   LV2_PATH =
-  #     "$HOME/.lv2:$HOME/.nix-profile/lib/lv2:/run/current-system/sw/lib/lv2";
-  #   LXVST_PATH =
-  #     "$HOME/.lxvst:$HOME/.nix-profile/lib/lxvst:/run/current-system/sw/lib/lxvst";
-  #   VST_PATH =
-  #     "$HOME/.vst:$HOME/.nix-profile/lib/vst:/run/current-system/sw/lib/vst";
-  # };
-
-  #  environment.variables =
-  #    (with lib;
-  #    listToAttrs (
-  #      map
-  #        (
-  #          type: nameValuePair "${toUpper type}_PATH"
-  #            ([ "$HOME/.${type}" "$HOME/.nix-profile/lib/${type}" "/run/current-system/sw/lib/${type}" ])
-  #        )
-  #        [ "dssi" "ladspa" "lv2" "lxvst" "vst" "vst3" ]
-  #    ));
-
   programs.neovim.vimAlias = true;
   programs.neovim.viAlias = true;
 
@@ -697,30 +627,8 @@ services.avahi = {
       mode = "0440";
     };
   };
-  # Pin channels to flake registry entries
-  # lib.mapAttrs'
-  # (name: value: {
-  #   name = "nix/path/${name}";
-  #   value.source = value.flake;
-  # })
-  # config.nix.registry;
-
 
   programs.command-not-found.enable = false;
-  #
-  #  home-manager.users.samir = { pkgs, ... }: {
-  #    home.stateVersion = "23.05";
-  #    home.packages = with pkgs; [
-  #      htop
-  #    ];
-  #
-  #  };
-
-  # for home-manager, use programs.bash.initExtra instead
-  #programs.bash.interactiveShellInit = ''
-  #  source ${pkgs.nix-index}/etc/profile.d/command-not-found.sh
-  #'';
-
   #systemd.services.btattach-bcm2e7c = lib.mkIf config.hardware.bluetooth.enable {
   #  before = [ "bluetooth.target" ];
 
