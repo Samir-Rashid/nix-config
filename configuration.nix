@@ -71,6 +71,7 @@
   nix.settings = {
     trusted-substituters = [
       "https://t2linux.cachix.org"
+      "http://10.0.3.16:8081" # NixCon cache
     ];
     trusted-public-keys = [
       "t2linux.cachix.org-1:P733c5Gt1qTcxsm+Bae0renWnT8OLs0u9+yfaK2Bejw="

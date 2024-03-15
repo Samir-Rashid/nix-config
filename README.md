@@ -16,15 +16,20 @@ What's not:
 - some proprietary things are messed up and will never work
   - touch ID
 
+## Why Nix
+
+While any OS will work fine, using NixOS is a game changer. Nix is a peek into a pure world. You can undo changes to your system, dependency conflicts are a completely solved problem, setting up projects that have nix shells are trivial, and so much more. I think it is crazy that Nix is not more widely adopted.
+
+I cannot claim that learning Nix is the best use of time, but it is an amazing ecosystem that I will never go back to non-declarative, non-reproducible systems.
+
 > [!WARNING]  
-> I seriously cannot recommend using NixOS. Any OS will work fine and there are better, useful things to spend your time on.
 > A funny but apt warning I found in a [readme](https://github.com/javacafe01/nix-config/)
 > 
 >  <img src="https://camo.githubusercontent.com/c7aabe19981f9cf4ae58e0f7ac688869ed1e72a6564c080de320cc6a755e269f/68747470733a2f2f692e726564642e69742f697869367a6b756467737536312e706e67" alt="Learning curve of NixOS leads to death" width="50%" />
 > 
 > Some more serious posts of the pitfalls of using NixOS:
 >
-> Personally, I have experienced the bad UX debugging nix issues, the terrible NixOS documentation, and the fragmentation of nix standards making things very hard to understand. NixOS concepts are hard to grasp and you don't want to have to wonder about all these philosophical reasons why simple things are hard to do as you are searching through forum posts to solve your issue.
+> Personally, I have experienced the bad UX debugging nix issues, the terrible NixOS documentation, and the fragmentation of Nix standards making things very hard to understand. NixOS concepts are hard to grasp and you don't want to have to wonder about all these philosophical reasons why simple things are hard to do as you are searching through forum posts to solve your issue.
 >
 > https://github.com/lambdanil/nix-problems
 >
@@ -54,5 +59,3 @@ What I had to change from the post
 - you may have to disable secure oot and allow booting from usb in recovery OS
 - before changing partitions, disable filevault
 - have to disable SIP before doing refind and then re-enable that and filevault afterwards
-
-         
