@@ -23,35 +23,64 @@
     nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { self, home-manager, nixpkgs, nixpkgs-old, nix-index-database, ... }@inputs:
+  outputs = { self, home-manager, nixpkgs, nixpkgs-old, nixpkgs-unstable, nix-index-database, ... }@inputs:
     let
       system = "x86_64-linux";
-      pkgs = nixpkgs.legacyPackages.${system};
+      pkgs-old = import nixpkgs-old {
+        # Refer to the `system` parameter from
+        # the outer scope recursively
+        system = system;
+        # To use Chrome, we need to allow the
+        # installation of non-free softwares.
+        config.allowUnfree = true;
+        config.segger-jlink.acceptLicense = true;
+      };
+      unstable = import nixpkgs-unstable {
+        # Refer to the `system` parameter from
+        # the outer scope recursively
+        system = system;
+        # To use Chrome, we need to allow the
+        # installation of non-free softwares.
+        config.allowUnfree = true;
+        config.segger-jlink.acceptLicense = true;
+        config.permittedInsecurePackages = [
+          "segger-jlink-qt4-794a"
+          "electron-25.9.0"
+          "segger-jlink-qt4-794l"
+        ];
+      };
+      pkgs = import nixpkgs {
+        # Refer to the `system` parameter from
+        # the outer scope recursively
+        system = system;
+        # To use Chrome, we need to allow the
+        # installation of non-free softwares.
+        config.allowUnfree = true;
+        config.segger-jlink.acceptLicense = true;
+        config.permittedInsecurePackages = [
+          "nix-2.15.3"
+          "segger-jlink-qt4-794l"
+          "electron-25.9.0"
+        ];
+
+      };
+      #nixpkgs.legacyPackages.${system};
       # pkgs-old = nixpkgs-old.legacyPackages.${system};
       #inputs.nixpkgs-old.config.allowUnfree = true;
-# NOTE: you can't do things like this, otherwise inputs gets overwritten and you will get attribute not available
-# something about specialArgs and inputs
-# need to reproduce and write blog post
-# error: attribute 'inputs' missing
-# nix flake attribute nixpkgs missing
-# https://discourse.nixos.org/t/flakes-error-error-attribute-outpath-missing/18044
+      # NOTE: you can't do things like this, otherwise inputs gets overwritten and you will get attribute not available
+      # something about specialArgs and inputs
+      # need to reproduce and write blog post
+      # error: attribute 'inputs' missing
+      # nix flake attribute nixpkgs missing
+      # https://discourse.nixos.org/t/flakes-error-error-attribute-outpath-missing/18044
     in
     {
 
       nixosConfigurations.default = nixpkgs.lib.nixosSystem {
         specialArgs = {
-          inherit inputs;
-          pkgs-old = import nixpkgs-old {
-            # Refer to the `system` parameter from
-            # the outer scope recursively
-            system = system;
-            # To use Chrome, we need to allow the
-            # installation of non-free softwares.
-            config.allowUnfree = true;
-            config.segger-jlink.acceptLicense = true;
-          };
+          inherit inputs pkgs pkgs-old unstable;
           #bruh = builtins.trace "The value of someValue is: inputs" inputs;
-          somethingTemporary = builtins.trace (builtins.attrNames inputs) inputs;
+          # somethingTemporary = builtins.trace (builtins.attrNames inputs) inputs;
         };
         modules = [
           ./configuration.nix

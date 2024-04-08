@@ -46,7 +46,7 @@
 # TODO: make home manager firefox and vscode extensions reproducible. 
 # TODO: https://github.com/nix-community/nix-direnv
 
-{ config, lib, pkgs, inputs, pkgs-old, ... }:
+{ config, lib, pkgs, inputs, pkgs-old, unstable, ... }:
 
 {
   imports = [
@@ -96,8 +96,8 @@
 
   nix.settings.nix-path = [ "/etc/nix/path" ]; # This will fix the missing NIX_PATH
 
-# NOTE: nix-shell with flakes, disable channels
-  #somethingTemporary = builtins.trace (builtins.attrNames inputs) inputs;
+  # NOTE: nix-shell with flakes, disable channels
+  # somethingTemporary = builtins.trace (builtins.attrNames inputs) inputs;
   nix.registry.nixpkgs.flake = inputs.nixpkgs;
   nix.nixPath = [ "nixpkgs=/etc/nix/path/nixpkgs" "nixpkgs-old=/etc/nix/path/nixpkgs-old" "nixpkgs-unstable=/etc/nix/path/nixpkgs-unstable" "/nix/var/nix/profiles/per-user/root/channels" ];
   systemd.tmpfiles.rules = [
@@ -168,7 +168,7 @@
       '';
       destination = "/etc/udev/rules.d/99-ftdi.rules";
     })
-    pkgs-old.segger-jlink
+    unstable.segger-jlink
 
     #gnome.gnome-settings-daemon
   ];
@@ -355,8 +355,9 @@
 
   nixpkgs.config.permittedInsecurePackages = [
     "electron-25.9.0"
+    "nix-2.15.3"
   ];
-  # inputs.nixpkgs-unstable.config.permittedInsecurePackages = [
+  #inputs.nixpkgs-unstable.config.permittedInsecurePackages = [
   #		"segger-jlink-qt4-794a"
   #];
 
@@ -420,7 +421,7 @@
     #radeontop
     gnome.gnome-sound-recorder
     #radeon-profile
-    pkgs-old.nrf-command-line-tools
+    unstable.nrf-command-line-tools
     #nrfconnect
     curl
     #libbass
@@ -434,8 +435,8 @@
 
     ladspaPlugins
     neovim
-    pkgs-old.segger-jlink # moved to unstable
-    pkgs-old.nrf-command-line-tools # moved to unstable
+    unstable.segger-jlink # moved to unstable
+    unstable.nrf-command-line-tools # moved to unstable
 
     htop
 
