@@ -29,6 +29,12 @@
       pkgs = nixpkgs.legacyPackages.${system};
       # pkgs-old = nixpkgs-old.legacyPackages.${system};
       #inputs.nixpkgs-old.config.allowUnfree = true;
+# NOTE: you can't do things like this, otherwise inputs gets overwritten and you will get attribute not available
+# something about specialArgs and inputs
+# need to reproduce and write blog post
+# error: attribute 'inputs' missing
+# nix flake attribute nixpkgs missing
+# https://discourse.nixos.org/t/flakes-error-error-attribute-outpath-missing/18044
     in
     {
 

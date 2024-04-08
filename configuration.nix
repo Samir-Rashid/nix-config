@@ -96,6 +96,7 @@
 
   nix.settings.nix-path = [ "/etc/nix/path" ]; # This will fix the missing NIX_PATH
 
+# NOTE: nix-shell with flakes, disable channels
   #somethingTemporary = builtins.trace (builtins.attrNames inputs) inputs;
   nix.registry.nixpkgs.flake = inputs.nixpkgs;
   nix.nixPath = [ "nixpkgs=/etc/nix/path/nixpkgs" "nixpkgs-old=/etc/nix/path/nixpkgs-old" "nixpkgs-unstable=/etc/nix/path/nixpkgs-unstable" "/nix/var/nix/profiles/per-user/root/channels" ];
@@ -148,7 +149,7 @@
   nix.gc = {
     automatic = true;
     dates = "weekly";
-    options = "--delete-older-than 30d";
+    options = "--delete-older-than 50d";
   };
   nix.settings.auto-optimise-store = true;
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
@@ -202,10 +203,10 @@
 
   # /etc/hosts
   networking.extraHosts = ''
-    #0.0.0.0 www.reddit.com
-    #0.0.0.0 reddit.com
-    #0.0.0.0 youtube.com
-    #0.0.0.0 www.youtube.com
+    0.0.0.0 www.reddit.com
+    0.0.0.0 reddit.com
+    0.0.0.0 youtube.com
+    0.0.0.0 www.youtube.com
   '';
   # can also add stevenblack list from github
   # extrahostsfromsteve = pkgs.fetchurl { url = "https://raw.githubusercontent.com/StevenBlack/hosts/v2.3.7/hosts"; sha256 = "sha256-C39FsyMQ3PJEwcfPsYSF7SZQZGA79m6o70vmwyFMPLM="; }
@@ -481,6 +482,8 @@
     jq
     tree
     tmux
+    # image compression
+    # oxipng image_optim
 
     # search tools
     fzf
@@ -607,6 +610,7 @@
   # https://github.com/NixOS/nixpkgs/issues/195512
   programs.neovim.vimAlias = true;
   programs.neovim.viAlias = true;
+  programs.nano.enable = false;
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
