@@ -205,8 +205,8 @@
   networking.extraHosts = ''
     0.0.0.0 www.reddit.com
     0.0.0.0 reddit.com
-    0.0.0.0 youtube.com
-    0.0.0.0 www.youtube.com
+    # 0.0.0.0 youtube.com
+    # 0.0.0.0 www.youtube.com
   '';
   # can also add stevenblack list from github
   # extrahostsfromsteve = pkgs.fetchurl { url = "https://raw.githubusercontent.com/StevenBlack/hosts/v2.3.7/hosts"; sha256 = "sha256-C39FsyMQ3PJEwcfPsYSF7SZQZGA79m6o70vmwyFMPLM="; }
@@ -433,6 +433,8 @@
     apostrophe
     #i3 # twm
 
+unstable.arduino-ide
+
     ladspaPlugins
     neovim
     unstable.segger-jlink # moved to unstable
@@ -494,10 +496,13 @@
     lfs
 
     pinta # MS Paint
+inkscape
 
     # audio
     #zoom-us
     ffmpeg
+libsForQt5.kdenlive
+
     yt-dlp
     spotify
     croc # send/receive files
