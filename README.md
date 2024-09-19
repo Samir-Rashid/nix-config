@@ -20,12 +20,12 @@ What's not:
 
 While any OS will work fine, using NixOS is a game changer. Nix is a peek into a pure world. You can undo changes to your system, dependency conflicts are a completely solved problem, setting up projects that have nix shells are trivial, and so much more. I think it is crazy that Nix is not more widely adopted.
 
-I cannot claim that learning Nix is the best use of time, but it is an amazing ecosystem that I will never go back to non-declarative, non-reproducible systems.
+I cannot claim that learning Nix is the best use of time, but it is an amazing ecosystem that I will never go back to non-declarative, non-reproducible systems. If you want to learn more about Nix/NixOS, the best starting point is [this video about Nix homeservers](https://www.youtube.com/watch?v=h8oyoDMUM2I&pp=ygUPbml4IGhvbWUgc2VydmVy) and then [this video explaining the Nix language](https://www.youtube.com/watch?v=5D3nUU1OVx8).
 
 > [!WARNING]  
-> A funny but apt warning I found in a [readme](https://github.com/javacafe01/nix-config/)
+> A funny but apt warning
 > 
->  <img src="https://camo.githubusercontent.com/c7aabe19981f9cf4ae58e0f7ac688869ed1e72a6564c080de320cc6a755e269f/68747470733a2f2f692e726564642e69742f697869367a6b756467737536312e706e67" alt="Learning curve of NixOS leads to death" width="50%" />
+>  <img src="https://github.com/user-attachments/assets/d28519bb-b345-434c-bfd7-abe54c22ee3f" alt="Learning curve of NixOS leads to death" width="50%" />
 > 
 > Some more serious posts of the pitfalls of using NixOS:
 >
