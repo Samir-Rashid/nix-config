@@ -20,7 +20,7 @@ What's not:
 
 While any OS will work fine, using NixOS is a game changer. Nix is a peek into a pure world. You can undo changes to your system, dependency conflicts are a completely solved problem, setting up projects that have nix shells are trivial, and so much more. I think it is crazy that Nix is not more widely adopted.
 
-I cannot claim that learning Nix is the best use of time, but it is an amazing ecosystem that I will never go back to non-declarative, non-reproducible systems. If you want to learn more about Nix/NixOS, the best starting point is [this video about Nix homeservers](https://www.youtube.com/watch?v=h8oyoDMUM2I&pp=ygUPbml4IGhvbWUgc2VydmVy) and then [this video explaining the Nix language](https://www.youtube.com/watch?v=5D3nUU1OVx8).
+I cannot claim that learning Nix is the best use of time, but it is an amazing ecosystem that I will never go back to non-declarative, non-reproducible systems. If you want to learn more about Nix/NixOS, the best starting point is [this video about Nix homeservers](https://www.youtube.com/watch?v=h8oyoDMUM2I) and then [this video explaining the Nix language](https://www.youtube.com/watch?v=5D3nUU1OVx8).
 
 > [!WARNING]  
 > A funny but apt warning
